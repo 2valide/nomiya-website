@@ -1,25 +1,131 @@
-# CODING AGENTS: READ THIS FIRST
+# Nomiya
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+Site et app de commande du restaurant Nomiya (211 bis avenue Charles de Gaulle,
+Neuilly-sur-Seine), implémentés d'après les maquettes Claude Design conservées
+dans [`design/`](design/).
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4.
 
-## What you should do — IMPORTANT
+## Démarrer
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+```bash
+npm install
+npm run dev          # http://localhost:3000
+```
 
-**Read `project/Nomiya Landing.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+| Script              | Rôle                                              |
+| ------------------- | ------------------------------------------------- |
+| `npm run dev`       | Serveur de développement                          |
+| `npm run build`     | Build de production                               |
+| `npm start`         | Sert le build                                     |
+| `npm run lint`      | ESLint (`next/core-web-vitals` + `next/typescript`)|
+| `npm run typecheck` | `tsc --noEmit`                                    |
+| `npm run smoke`     | Parcours navigateur de bout en bout (voir plus bas)|
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+## Les trois écrans
 
-## About the design files
+| Route          | Écran            | Rendu                                    |
+| -------------- | ---------------- | ---------------------------------------- |
+| `/`            | Landing page     | Statique                                 |
+| `/commande`    | App de commande  | Statique, tout l'état vit côté client     |
+| `/reservation` | Réservation      | À la demande — les créneaux partent d'aujourd'hui |
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+**Landing** — héros plein écran, bandeau de services, la maison, trois
+signatures, midi/soir, galerie, avis, bloc horaires & accès, pied de page.
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+**Commande** — choix du mode (livraison / à emporter / sur place via QR de
+table), carte de 162 plats en 15 catégories avec recherche, scroll infini et
+catégorie active synchronisée au défilement, fiche plat à options obligatoires
+et payantes, panier, paliers (livraison offerte dès 30 €, −5 € dès 40 €), code
+promo `NOMIYA10`, récapitulatif, paiement, suivi de commande.
+Deux mises en page : liste + sidebar sur mobile, grille + panier permanent
+au-delà de 900 px.
 
-## Bundle contents
+**Réservation** — couverts, jour, service midi/soir avec créneaux complets et
+fermetures, zone de salle, coordonnées, récapitulatif collant sur ordinateur et
+barre de confirmation sur mobile, écran de confirmation avec référence.
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Restaurant ordering app design` project files (HTML prototypes, assets, components)
+## Organisation
+
+```
+src/
+  app/                     Routes et styles globaux
+    globals.css            Tokens du design system (@theme Tailwind)
+  components/
+    Photo.tsx              Emplacement photo, avec repli sur l'aplat des maquettes
+    landing/               Sections de la landing
+    commande/              App de commande (contexte + vues)
+    reservation/           Formulaire de réservation
+  hooks/
+    useIsDesktop.ts        Point de rupture 900 px
+    useMenuScroll.ts       Scroll infini + catégorie active synchronisée
+  lib/
+    menu-data.ts           Carte : 162 plats, 15 catégories, 15 groupes d'options
+    order.ts               Paliers, remises, frais, options, totaux
+    reservation.ts         Jours, créneaux, complets, validation
+    themes.ts              Trois thèmes de l'app de commande
+    photos.ts              Toutes les photos du site, en un seul endroit
+    commande-config.ts     Variantes d'UX retenues
+    reservation-config.ts  Réglages de salle
+```
+
+Les règles métier (prix, paliers, disponibilités) sont dans `src/lib/`, séparées
+des composants : ce sont elles qui bougeront en premier quand le back-office du
+restaurateur arrivera.
+
+## Photographie
+
+⚠️ **À vérifier avant mise en ligne.** Les maquettes utilisaient des aplats
+hachurés légendés. Ils sont remplacés par des photos libres de droits servies
+par le CDN Unsplash, déclarées **uniquement** dans
+[`src/lib/photos.ts`](src/lib/photos.ts). Ces URL n'ont pas pu être vérifiées
+depuis l'environnement de développement, dont la politique réseau bloque tous
+les hébergeurs d'images : **ouvrez les trois pages et confirmez que chaque photo
+s'affiche**.
+
+Le composant `<Photo />` retombe sur l'aplat hachuré de la maquette, légende
+comprise, dès qu'une image manque — une URL morte dégrade la page, elle ne la
+casse pas.
+
+Pour passer aux vraies photos du restaurant : déposez les fichiers dans
+`public/photos/` et remplacez les `src` de `photos.ts` par `/photos/mon-fichier.jpg`.
+Rien d'autre à toucher. Les 162 plats partagent une photo par famille ; pour une
+photo par plat, ajoutez un champ à `menu-data.ts` et lisez-le dans `dishPhoto()`.
+
+## Variantes d'UX
+
+Le prototype exposait ses variantes dans les « Tweaks » de Claude Design. Ce sont
+des réglages produit, pas des options client : ils sont figés dans
+`src/lib/commande-config.ts` et `src/lib/reservation-config.ts`, aux valeurs
+retenues à la fin des allers-retours de design.
+
+| Réglage         | Valeur retenue        | Autres valeurs                    |
+| --------------- | --------------------- | --------------------------------- |
+| `theme`         | Encre & vermillon     | Nuit indigo · Papier & sumi       |
+| `navigation`    | Sidebar catégories    | Onglets horizontaux               |
+| `navigationPc`  | Sidebar + panier      | Catégories en haut                |
+| `ficheplat`     | Bottom sheet          | Page pleine                       |
+| `upsells`       | Équilibré             | Discret · Maximal                 |
+
+La variante `vue` (forcer un cadre téléphone de 390 px) n'a pas été reprise :
+c'était un outil de comparaison propre au canevas de design. Les deux mises en
+page suivent la largeur réelle de la fenêtre.
+
+## Vérification
+
+```bash
+npm run build && npm start          # dans un terminal
+npm run smoke                       # dans un autre
+```
+
+`e2e/smoke.mjs` pilote un vrai navigateur (Playwright) sur les trois écrans :
+fiche plat et prix des options, ajout au panier, paliers, scroll infini,
+recherche, code promo, suivi de commande, mode sur place, et validation du
+formulaire de réservation. Les captures atterrissent dans `e2e/screenshots/`.
+
+## Maquettes d'origine
+
+`design/` conserve le lot exporté depuis Claude Design : le README du transfert,
+la conversation de conception (`design/chats/`) et les prototypes HTML
+(`design/project/`), dont le design system dont sortent les tokens de
+`globals.css`.
