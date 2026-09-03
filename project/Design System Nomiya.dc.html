@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F1EDE6;font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#C5361D}a:hover{color:#98230F}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="max-width:1080px;margin:0 auto;padding:56px 32px 96px;color:#171310">
+
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;border-bottom:1px solid rgba(23,19,16,.14);padding-bottom:22px">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span style="font-size:11.5px;font-weight:800;letter-spacing:1.4px;color:#C5361D">DESIGN SYSTEM</span>
+    <span style="font-family:'Instrument Serif',Georgia,serif;font-size:52px;line-height:1;color:#171310">Nomiya</span>
+    <span style="font-size:14px;font-weight:500;color:#8A8078;max-width:520px;line-height:1.55">Tokens et composants extraits de l'app de commande. À réutiliser tel quel sur la landing page et les écrans à venir.</span>
+  </div>
+  <span style="font-size:12px;font-weight:700;color:#8A8078">v1 · août 2026</span>
+</div>
+
+<div style="margin-top:44px;display:flex;flex-direction:column;gap:14px">
+  <span style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#8A8078">01 — COULEURS</span>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px">
+    <sc-for list="{{ colors }}" as="c" hint-placeholder-count="8">
+      <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:14px;overflow:hidden">
+        <div style="height:74px;background:{{ c.hex }};border-bottom:1px solid rgba(23,19,16,.06)"></div>
+        <div style="padding:10px 12px 12px;display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:12.5px;font-weight:800">{{ c.n }}</span>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:#8A8078">{{ c.hex }}</span>
+          <span style="font-size:10.5px;font-weight:600;color:#A79D93;line-height:1.35">{{ c.use }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:6px">
+    <sc-for list="{{ themes }}" as="th" hint-placeholder-count="3">
+      <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:14px;padding:13px 14px;display:flex;align-items:center;gap:12px">
+        <div style="display:flex;flex:none">
+          <span style="width:26px;height:26px;border-radius:50% 0 0 50%;background:{{ th.a }}"></span>
+          <span style="width:26px;height:26px;background:{{ th.b }}"></span>
+          <span style="width:26px;height:26px;border-radius:0 50% 50% 0;background:{{ th.c }}"></span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:12.5px;font-weight:800">{{ th.n }}</span>
+          <span style="font-size:10.5px;font-weight:600;color:#8A8078">{{ th.sub }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<div style="margin-top:48px;display:flex;flex-direction:column;gap:14px">
+  <span style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#8A8078">02 — TYPOGRAPHIE</span>
+  <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:26px 28px;display:flex;flex-direction:column;gap:20px">
+    <sc-for list="{{ type }}" as="ty" hint-placeholder-count="6">
+      <div style="display:flex;align-items:baseline;gap:22px;border-bottom:1px solid rgba(23,19,16,.06);padding-bottom:16px">
+        <span style="flex:1;min-width:0;font-family:{{ ty.ff }};font-size:{{ ty.size }};font-weight:{{ ty.fw }};line-height:1.15;color:#171310">{{ ty.sample }}</span>
+        <span style="flex:none;width:210px;display:flex;flex-direction:column;gap:2px;text-align:right">
+          <span style="font-size:12px;font-weight:800">{{ ty.n }}</span>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:#8A8078">{{ ty.spec }}</span>
+        </span>
+      </div>
+    </sc-for>
+    <span style="font-size:12.5px;font-weight:600;color:#8A8078;line-height:1.6">Instrument Serif pour les titres d'ambiance (nom du restaurant, accroches). Manrope pour tout le reste : plats, prix, boutons, libellés. Aucun texte sous 10,5 px, 24 px minimum sur les écrans de commande tactiles.</span>
+  </div>
+</div>
+
+<div style="margin-top:48px;display:flex;flex-direction:column;gap:14px">
+  <span style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#8A8078">03 — RAYONS, ESPACEMENTS, OMBRES</span>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px">
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:13px;font-weight:800">Rayons</span>
+      <div style="display:flex;align-items:flex-end;gap:12px">
+        <sc-for list="{{ radii }}" as="r" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <span style="width:52px;height:52px;background:#F3EFE8;border:1px solid rgba(23,19,16,.1);border-radius:{{ r.v }}"></span>
+            <span style="font-family:ui-monospace,Menlo,monospace;font-size:10px;color:#8A8078">{{ r.v }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">12 px pour les champs et petites tuiles, 14-16 px pour les cartes et boutons pleine largeur, 999 px pour les pastilles et chips.</span>
+    </div>
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:13px;font-weight:800">Espacements</span>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <sc-for list="{{ space }}" as="s" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="height:9px;width:{{ s.v }};background:#C5361D;border-radius:2px"></span>
+            <span style="font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:#8A8078">{{ s.v }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">Échelle 4 · 8 · 12 · 16 · 22 · 28. Grilles et listes toujours en flex/grid avec gap.</span>
+    </div>
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:13px;font-weight:800">Élévation</span>
+      <div style="display:flex;gap:14px;padding:6px 0">
+        <span style="width:66px;height:44px;background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:12px"></span>
+        <span style="width:66px;height:44px;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(23,19,16,.22)"></span>
+        <span style="width:66px;height:44px;background:#fff;border-radius:12px;box-shadow:0 18px 60px rgba(23,19,16,.28)"></span>
+      </div>
+      <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">Bordure seule au repos, ombre moyenne pour la barre de panier, ombre haute pour les bottom sheets et modales.</span>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:48px;display:flex;flex-direction:column;gap:14px">
+  <span style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#8A8078">04 — COMPOSANTS</span>
+
+  <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:16px">
+    <span style="font-size:13px;font-weight:800">Boutons</span>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <button style="border:0;background:#C5361D;color:#fff;font-family:inherit;font-size:14px;font-weight:800;border-radius:14px;height:48px;padding:0 22px;cursor:pointer">Commander</button>
+      <button style="border:0;background:#171310;color:#fff;font-family:inherit;font-size:14px;font-weight:800;border-radius:14px;height:48px;padding:0 22px;cursor:pointer">Voir le panier</button>
+      <button style="border:1.5px solid rgba(23,19,16,.14);background:transparent;color:#171310;font-family:inherit;font-size:14px;font-weight:800;border-radius:14px;height:48px;padding:0 20px;cursor:pointer">Secondaire</button>
+      <button style="border:0;background:#FDEDE9;color:#C5361D;font-family:inherit;font-size:12.5px;font-weight:800;border-radius:999px;height:34px;padding:0 16px;cursor:pointer">Choisir</button>
+      <button style="border:0;background:#C5361D;color:#fff;width:30px;height:30px;border-radius:50%;font-size:16px;line-height:1;cursor:pointer">+</button>
+      <button style="border:0;background:#F3EFE8;color:#8A8078;font-family:inherit;font-size:13px;font-weight:800;border-radius:14px;height:48px;padding:0 20px;cursor:not-allowed">Désactivé</button>
+    </div>
+    <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">Hauteur 48-56 px sur mobile, 44 px minimum pour toute cible tactile. Vermillon = action qui engage la commande ; encre = navigation vers le panier.</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px">
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:13px;font-weight:800">Ligne de plat (mobile)</span>
+      <div style="display:flex;gap:11px;align-items:flex-start;border-bottom:1px solid rgba(23,19,16,.06);padding-bottom:14px">
+        <div style="width:82px;height:82px;flex:none;border-radius:13px;background:repeating-linear-gradient(135deg,#EFE8DE 0 7px,#E5DCCF 7px 14px);position:relative;overflow:hidden">
+          <span style="position:absolute;top:0;left:0;background:#C5361D;color:#fff;font-size:8.5px;font-weight:800;padding:3px 5px;border-bottom-right-radius:8px">N°1</span>
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:14.5px;font-weight:700;line-height:1.25">Plateau Nomiya 18 pièces</span>
+          <span style="font-size:11.5px;font-weight:500;color:#8A8078;line-height:1.35">Saumon, thon, crevette, avocat, california</span>
+          <span style="font-size:10.5px;font-weight:600;color:#A79D93">Vendu 820 fois ce mois</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:2px">
+            <span style="font-size:16px;font-weight:800;color:#C5361D">dès 26,90 €</span>
+            <button style="border:0;background:#FDEDE9;color:#C5361D;font-family:inherit;font-size:12px;font-weight:800;border-radius:999px;height:28px;padding:0 12px;cursor:pointer">Choisir</button>
+          </div>
+        </div>
+      </div>
+      <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">Photo 82 px, description sur 2 lignes maximum, preuve sociale sous la description, prix préfixé « dès » quand le plat a des options.</span>
+    </div>
+
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:13px;font-weight:800">Carte de plat (desktop)</span>
+      <div style="width:228px;background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:16px;overflow:hidden">
+        <div style="height:120px;background:repeating-linear-gradient(135deg,#EFE8DE 0 8px,#E5DCCF 8px 16px)"></div>
+        <div style="padding:12px 13px 13px;display:flex;flex-direction:column;gap:5px">
+          <span style="font-size:14.5px;font-weight:700;line-height:1.25">Chirashi saumon</span>
+          <span style="font-size:11.5px;font-weight:500;color:#8A8078;line-height:1.4">Riz vinaigré, saumon, avocat, tobiko</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:9px">
+            <span style="font-size:16px;font-weight:800;color:#C5361D">17,90 €</span>
+            <button style="border:0;background:#C5361D;color:#fff;font-family:inherit;font-size:12px;font-weight:800;border-radius:999px;padding:8px 14px;cursor:pointer">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px">
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:13px;font-weight:800">Badges & pastilles</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <sc-for list="{{ badges }}" as="b" hint-placeholder-count="6">
+          <span style="font-size:9.5px;font-weight:800;letter-spacing:.3px;color:{{ b.fg }};background:{{ b.bg }};border-radius:5px;padding:4px 7px">{{ b.n }}</span>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span style="font-size:12.5px;font-weight:700;color:#fff;background:#C5361D;border:1.5px solid #C5361D;border-radius:999px;padding:8px 14px">Sélectionné</span>
+        <span style="font-size:12.5px;font-weight:600;color:#8A8078;border:1.5px solid rgba(23,19,16,.1);border-radius:999px;padding:8px 14px">Au repos</span>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:13px;font-weight:800">Barre de palier</span>
+      <div style="background:#FFF7EC;border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:12px;font-weight:700;color:#8A5B06">Plus que 6,40 € pour la livraison offerte</span>
+        <div style="height:5px;border-radius:99px;background:#EFE0C4;overflow:hidden"><div style="height:100%;width:79%;border-radius:99px;background:#E0A422"></div></div>
+      </div>
+      <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">Un seul palier visible à la fois, toujours exprimé en euros restants. Ambre réservé aux paliers, jamais aux actions.</span>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px">
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:13px;font-weight:800">Options de personnalisation</span>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span style="font-size:13.5px;font-weight:800">Accompagnement</span>
+          <span style="font-size:10.5px;font-weight:700;color:#C5361D;background:#FDEDE9;border-radius:5px;padding:2px 6px">Obligatoire</span>
+        </div>
+        <div style="border:1.5px solid #C5361D;background:#FDEDE9;border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px">
+          <span style="width:18px;height:18px;flex:none;border-radius:50%;background:#C5361D;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center">✓</span>
+          <span style="flex:1;font-size:13.5px;font-weight:600">Riz vinaigré</span>
+          <span style="font-size:13px;font-weight:700;color:#C5361D">+ 0,80 €</span>
+        </div>
+        <div style="border:1.5px solid rgba(23,19,16,.1);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px">
+          <span style="width:18px;height:18px;flex:none;border-radius:6px;border:1.5px solid rgba(23,19,16,.22)"></span>
+          <span style="flex:1;font-size:13.5px;font-weight:600">Nouilles soba</span>
+          <span style="font-size:13px;font-weight:700;color:#A79D93">Inclus</span>
+        </div>
+      </div>
+      <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">Cercle = choix unique, carré = choix multiple. Le supplément est toujours affiché à droite, « Inclus » quand il est gratuit.</span>
+    </div>
+
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:13px;font-weight:800">Barre de panier flottante</span>
+      <div style="background:#171310;border-radius:16px;height:56px;padding:0 14px 0 12px;display:flex;align-items:center;gap:12px;color:#fff;box-shadow:0 8px 24px rgba(23,19,16,.22)">
+        <span style="width:34px;height:34px;border-radius:10px;background:#C5361D;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex:none">4</span>
+        <span style="display:flex;flex-direction:column;gap:1px">
+          <span style="font-size:16px;font-weight:800">43,60 €</span>
+          <span style="font-size:10.5px;font-weight:600;opacity:.65">4 articles</span>
+        </span>
+        <span style="margin-left:auto;font-size:13.5px;font-weight:800;background:#C5361D;border-radius:12px;padding:10px 16px">Voir le panier</span>
+      </div>
+      <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">Visible dès le premier article sur mobile. Sur desktop, remplacée par le panier permanent en colonne de droite.</span>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:48px;display:flex;flex-direction:column;gap:14px">
+  <span style="font-size:12px;font-weight:800;letter-spacing:1.2px;color:#8A8078">05 — RÈGLES</span>
+  <div style="background:#171310;border-radius:18px;padding:26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px">
+    <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:13px;font-weight:800;color:#fff">{{ r.n }}</span>
+        <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.62);line-height:1.6">{{ r.d }}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      colors: [
+        {n:'Encre',hex:'#171310',use:'Texte principal, barre de panier'},
+        {n:'Vermillon',hex:'#C5361D',use:'Action, prix, accent de marque'},
+        {n:'Vermillon clair',hex:'#FDEDE9',use:'Fond d\u2019option sélectionnée'},
+        {n:'Crème',hex:'#FBF8F4',use:'Fond d\u2019écran'},
+        {n:'Surface',hex:'#FFFFFF',use:'Cartes, en-têtes, panneaux'},
+        {n:'Sable',hex:'#F3EFE8',use:'Fonds secondaires, sidebar'},
+        {n:'Gris texte',hex:'#8A8078',use:'Descriptions, libellés'},
+        {n:'Ambre',hex:'#E0A422',use:'Paliers et progression'},
+        {n:'Ambre fond',hex:'#FFF7EC',use:'Bandeau de palier'},
+        {n:'Vert remise',hex:'#1E7A4C',use:'Remises appliquées'}
+      ],
+      themes: [
+        {n:'Encre & vermillon',sub:'Thème par défaut, salle et livraison',a:'#FBF8F4',b:'#C5361D',c:'#171310'},
+        {n:'Nuit indigo',sub:'Service du soir, écrans sombres',a:'#14161C',b:'#E8734A',c:'#F1EEE8'},
+        {n:'Papier & sumi',sub:'Version sobre, monochrome',a:'#F6F5F1',b:'#1B1A17',c:'#EDEBE4'}
+      ],
+      type: [
+        {n:'Display',spec:'Instrument Serif · 38-52 px',ff:"'Instrument Serif',Georgia,serif",size:'44px',fw:'400',sample:'Nomiya'},
+        {n:'Titre de section',spec:'Manrope 800 · 20 px',ff:'Manrope,sans-serif',size:'20px',fw:'800',sample:'Sushi à la pièce'},
+        {n:'Nom de plat',spec:'Manrope 700 · 14,5 px',ff:'Manrope,sans-serif',size:'14.5px',fw:'700',sample:'Plateau Nomiya 18 pièces'},
+        {n:'Prix',spec:'Manrope 800 · 16 px',ff:'Manrope,sans-serif',size:'16px',fw:'800',sample:'26,90 €'},
+        {n:'Description',spec:'Manrope 500 · 11,5 px',ff:'Manrope,sans-serif',size:'11.5px',fw:'500',sample:'Saumon, thon, crevette, avocat, california'},
+        {n:'Micro-libellé',spec:'Manrope 800 · 9,5 px · 1,2 px',ff:'Manrope,sans-serif',size:'10px',fw:'800',sample:'LES + COMMANDÉS'}
+      ],
+      radii: [{v:'8px'},{v:'12px'},{v:'16px'},{v:'20px'},{v:'999px'}],
+      space: [{v:'4px'},{v:'8px'},{v:'12px'},{v:'16px'},{v:'22px'},{v:'28px'}],
+      badges: [
+        {n:'N°1',bg:'#C5361D',fg:'#fff'},
+        {n:'TOP',bg:'#C5361D',fg:'#fff'},
+        {n:'NOUVEAU',bg:'#171310',fg:'#fff'},
+        {n:'-15%',bg:'#E0A422',fg:'#171310'},
+        {n:'LIMITÉ',bg:'#FDEDE9',fg:'#C5361D'},
+        {n:'PARTAGE',bg:'#F3EFE8',fg:'#5B534C'}
+      ],
+      rules: [
+        {n:'Une seule couleur d\u2019action',d:'Le vermillon signale ce qui ajoute au panier. Jamais utilisé pour décorer.'},
+        {n:'Le prix ne se cache pas',d:'Prix visible sur chaque ligne, chaque option, chaque total. « dès » dès qu\u2019il y a des suppléments.'},
+        {n:'Une carte longue se parcourt, pas se lit',d:'Catégories toujours à l\u2019écran, recherche en haut, scroll infini avec catégorie active synchronisée.'},
+        {n:'L\u2019upsell reste factuel',d:'Suggestions rattachées au plat ou au panier, formulées comme un service, jamais plus de trois à la fois.'}
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

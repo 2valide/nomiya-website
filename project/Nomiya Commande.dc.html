@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E7E2DA;font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#C5361D}a:hover{color:#98230F}
+*{box-sizing:border-box}
+::-webkit-scrollbar{width:0;height:0}
+input{font-family:inherit}
+@keyframes nmy-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+</style>
+</helmet>
+<div style="--bg:{{ t.bg }};--sf:{{ t.sf }};--ink:{{ t.ink }};--mut:{{ t.mut }};--line:{{ t.line }};--acc:{{ t.acc }};--soft:{{ t.soft }};--tint:{{ t.tint }};--tinkc:{{ t.tinkc }};--elev:{{ t.elev }};--disp:{{ t.disp }};width:{{ appW }};max-width:100%;height:{{ appH }};margin:{{ appMargin }};border-radius:{{ appRadius }};box-shadow:{{ appShadow }};overflow:hidden;position:relative;background:var(--bg,#FBF8F4);display:flex;flex-direction:column">
+
+<sc-if value="{{ isHome }}">
+<div style="flex:1;min-height:0;overflow-y:auto;background:var(--bg,#FBF8F4)">
+  <div style="position:relative;background:#100E0C;overflow:hidden">
+    <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#2A2420 0 14px,#211C19 14px 28px)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,14,12,.62) 0%,rgba(16,14,12,.3) 40%,rgba(16,14,12,.92) 100%)"></div>
+    <span style="position:absolute;bottom:9px;right:12px;font-family:ui-monospace,Menlo,monospace;font-size:8.5px;color:rgba(255,255,255,.4);z-index:3">photo comptoir à sushi</span>
+    <div style="position:relative;z-index:2;width:100%;max-width:{{ homeW }};margin:0 auto;padding:{{ homePad }};display:flex;flex-direction:column;gap:14px;min-height:{{ heroMin }};justify-content:flex-end">
+      <a href="Nomiya Landing.dc.html" style="align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.6px;color:rgba(255,255,255,.6);text-decoration:none">‹ RETOUR AU SITE</a>
+      <span style="font-family:var(--disp,'Instrument Serif',Georgia,serif);font-size:clamp(34px,6vw,54px);line-height:1;letter-spacing:-.8px;color:#fff">Nomiya</span>
+      <span style="font-size:12.5px;font-weight:700;letter-spacing:.4px;color:rgba(255,255,255,.62)">211 BIS AV. CHARLES DE GAULLE · NEUILLY-SUR-SEINE</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12px;font-weight:700;color:#fff">
+        <span>Ouvert jusqu'à 23 h</span>
+        <span style="color:rgba(255,255,255,.3)">·</span>
+        <span>162 plats à la carte</span>
+        <span style="color:rgba(255,255,255,.3)">·</span>
+        <span>Prix moyen 16 €</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:100%;max-width:{{ homeW }};margin:0 auto;padding:{{ bodyPad }};display:flex;flex-direction:column;gap:18px">
+    <div style="display:flex;flex-direction:column;gap:5px">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:1.8px;color:var(--acc,#C5361D)">COMMANDER</span>
+      <span style="font-family:var(--disp,'Instrument Serif',Georgia,serif);font-size:clamp(24px,3.4vw,34px);line-height:1.1;color:var(--ink,#171310)">Comment souhaitez-vous dîner&nbsp;?</span>
+    </div>
+    <div style="display:grid;grid-template-columns:{{ modeCols }};gap:12px">
+      <sc-for list="{{ modes }}" as="m" hint-placeholder-count="3">
+        <button onClick="{{ m.onPick }}" style="border:1px solid var(--line,rgba(23,19,16,.09));background:var(--sf,#fff);cursor:pointer;font-family:inherit;border-radius:20px;padding:0;overflow:hidden;display:flex;flex-direction:column;text-align:left">
+          <span style="height:{{ modeImgH }};width:100%;background:repeating-linear-gradient(135deg,#EFE8DE 0 9px,#E5DCCF 9px 18px);display:flex;align-items:flex-end;padding:8px">
+            <span style="font-family:ui-monospace,Menlo,monospace;font-size:8px;color:#8A8078;background:rgba(251,248,244,.88);border-radius:4px;padding:2px 5px">{{ m.ph }}</span>
+          </span>
+          <span style="padding:15px 17px 17px;display:flex;flex-direction:column;gap:6px;flex:1">
+            <span style="font-size:16.5px;font-weight:800;color:var(--ink,#171310)">{{ m.title }}</span>
+            <span style="font-size:12px;font-weight:500;color:var(--mut,#8A8078);line-height:1.5">{{ m.sub }}</span>
+            <span style="font-size:12px;font-weight:800;color:var(--acc,#C5361D);margin-top:6px">{{ m.cta }} ›</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="border-radius:18px;background:var(--tint,#FFF7EC);padding:15px 17px;display:flex;flex-direction:column;gap:5px">
+      <span style="font-size:12.5px;font-weight:800;color:var(--tinkc,#8A5B06)">Livraison offerte dès 30 € · 5 € de remise dès 40 €</span>
+      <span style="font-size:11.5px;font-weight:600;color:var(--tinkc,#8A5B06);opacity:.78;line-height:1.5">Les formules du midi sont 15 % moins chères qu'à la carte, du lundi au vendredi.</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:{{ infoCols }};gap:12px">
+      <div style="border:1px solid var(--line,rgba(23,19,16,.09));border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:9px">
+        <span style="font-size:10px;font-weight:800;letter-spacing:1.4px;color:var(--mut,#8A8078)">HORAIRES</span>
+        <sc-for list="{{ hours }}" as="h" hint-placeholder-count="3">
+          <div style="display:flex;justify-content:space-between;gap:12px;font-size:12.5px">
+            <span style="font-weight:700;color:var(--ink,#171310)">{{ h.d }}</span>
+            <span style="font-weight:600;color:var(--mut,#8A8078);text-align:right">{{ h.h }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="border:1px solid var(--line,rgba(23,19,16,.09));border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:9px">
+        <span style="font-size:10px;font-weight:800;letter-spacing:1.4px;color:var(--mut,#8A8078)">UNE QUESTION</span>
+        <span style="font-size:12.5px;font-weight:600;color:var(--mut,#8A8078);line-height:1.55">Allergènes, commande de groupe, plat hors carte : appelez la salle, on décroche pendant le service.</span>
+        <a href="tel:+33146374902" style="font-size:14px;font-weight:800;color:var(--acc,#C5361D);text-decoration:none">01 46 37 49 02</a>
+      </div>
+    </div>
+    <div style="height:8px"></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTable }}">
+<div style="flex:1;display:flex;flex-direction:column;background:var(--bg,#FBF8F4);padding:22px 20px;width:100%;max-width:{{ colW }};margin:0 auto">
+  <button onClick="{{ goHome }}" style="align-self:flex-start;border:0;background:var(--soft,#F3EFE8);color:var(--ink,#171310);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px">‹</button>
+  <span style="font-family:var(--disp,'Instrument Serif',Georgia,serif);font-size:29px;line-height:1.1;color:var(--ink,#171310);margin-top:20px">Vous êtes à table</span>
+  <span style="font-size:13px;font-weight:600;color:var(--mut,#8A8078);margin-top:8px;line-height:1.5">Scannez le QR de la table ou choisissez son numéro. La commande part directement en cuisine.</span>
+  <div style="margin-top:22px;border:1.5px dashed var(--line,rgba(23,19,16,.14));border-radius:20px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
+    <div style="width:56px;height:56px;border-radius:12px;background:repeating-linear-gradient(45deg,var(--ink,#171310) 0 4px,transparent 4px 8px);opacity:.5"></div>
+    <span style="font-family:ui-monospace,Menlo,monospace;font-size:10px;color:var(--mut,#8A8078)">scanner le QR de la table</span>
+  </div>
+  <span style="font-size:12px;font-weight:800;color:var(--ink,#171310);margin-top:22px">Ou choisir la table</span>
+  <div style="margin-top:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:9px">
+    <sc-for list="{{ tables }}" as="tb" hint-placeholder-count="12">
+      <button onClick="{{ tb.onPick }}" style="border:1.5px solid {{ tb.bc }};background:{{ tb.bg }};color:{{ tb.fg }};cursor:pointer;font-family:inherit;border-radius:12px;height:46px;font-size:14px;font-weight:800">{{ tb.n }}</button>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMenuDesk }}">
+<div style="flex:none;background:var(--sf,#fff);border-bottom:1px solid var(--line,rgba(23,19,16,.08));padding:14px 28px;display:flex;align-items:center;gap:20px">
+  <div style="display:flex;align-items:baseline;gap:12px;flex:none">
+    <span style="font-family:var(--disp,'Instrument Serif',Georgia,serif);font-size:26px;line-height:1;color:var(--ink,#171310)">Nomiya</span>
+    <span style="font-size:12px;font-weight:700;color:var(--acc,#C5361D)">{{ modeLabel }}</span>
+  </div>
+  <div style="flex:1;max-width:420px;display:flex;align-items:center;gap:9px;background:var(--soft,#F5F1EA);border-radius:12px;padding:0 13px;height:40px">
+    <span style="width:14px;height:14px;border:2px solid var(--mut,#8A8078);border-radius:50%;flex:none"></span>
+    <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Rechercher parmi 162 plats…" style="flex:1;border:0;background:transparent;outline:none;font-size:13.5px;font-weight:500;color:var(--ink,#171310);min-width:0">
+  </div>
+  <button onClick="{{ goHome }}" style="margin-left:auto;border:1.5px solid var(--line,rgba(23,19,16,.12));background:transparent;color:var(--mut,#8A8078);font-family:inherit;font-size:12px;font-weight:700;padding:9px 14px;border-radius:999px;cursor:pointer;flex:none">Changer de mode</button>
+</div>
+<sc-if value="{{ showDeskRail }}">
+<div style="flex:none;background:var(--sf,#fff);border-bottom:1px solid var(--line,rgba(23,19,16,.08));position:relative;display:flex;align-items:center;gap:10px;padding:14px 46px">
+  <button onClick="{{ railLeft }}" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);border:1px solid var(--line,rgba(23,19,16,.12));background:var(--sf,#fff);color:var(--ink,#171310);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1;z-index:2">‹</button>
+  <div ref="{{ railRef }}" style="flex:1;min-width:0;display:flex;gap:10px;overflow-x:auto;padding:2px 0">
+    <sc-for list="{{ cats }}" as="c" hint-placeholder-count="10">
+      <button onClick="{{ c.onPick }}" style="flex:none;width:126px;border:1.5px solid {{ c.tileBc }};background:{{ c.tileBg }};cursor:pointer;font-family:inherit;border-radius:14px;padding:12px 8px 11px;display:flex;flex-direction:column;align-items:center;gap:9px">
+        <span style="width:56px;height:56px;border-radius:50%;background:{{ c.tileDot }};display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:7px;color:{{ c.tileDotFg }};text-align:center;line-height:1.2">visuel</span>
+        <span style="font-size:11.5px;font-weight:{{ c.fw }};color:{{ c.tileFg }};text-align:center;line-height:1.25;height:29px;overflow:hidden">{{ c.name }}</span>
+      </button>
+    </sc-for>
+  </div>
+  <button onClick="{{ railRight }}" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:1px solid var(--line,rgba(23,19,16,.12));background:var(--sf,#fff);color:var(--ink,#171310);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1;z-index:2">›</button>
+</div>
+</sc-if>
+<div style="flex:1;min-height:0;display:grid;grid-template-columns:{{ deskCols }}">
+  <sc-if value="{{ showDeskSide }}">
+  <div style="overflow-y:auto;background:var(--soft,#F5F1EA);border-right:1px solid var(--line,rgba(23,19,16,.06));padding:12px 0 40px">
+    <sc-for list="{{ cats }}" as="c" hint-placeholder-count="12">
+      <button onClick="{{ c.onPick }}" style="width:100%;border:0;cursor:pointer;font-family:inherit;text-align:left;padding:13px 16px 13px 20px;background:{{ c.bg }};color:{{ c.fg }};font-size:13.5px;font-weight:{{ c.fw }};line-height:1.3;position:relative;display:flex;align-items:center;gap:9px">
+        <span style="position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:{{ c.bar }}"></span>
+        <span style="flex:1">{{ c.name }}</span>
+        <sc-if value="{{ c.hasBadge }}"><span style="font-size:9px;font-weight:800;letter-spacing:.3px;color:#fff;background:var(--acc,#C5361D);border-radius:4px;padding:2px 5px">{{ c.badge }}</span></sc-if>
+      </button>
+    </sc-for>
+  </div>
+  </sc-if>
+  <div ref="{{ listRef }}" onScroll="{{ onScroll }}" style="overflow-y:auto;background:var(--bg,#FBF8F4);padding:0 26px 60px">
+    <sc-for list="{{ sections }}" as="s" hint-placeholder-count="3">
+      <div id="{{ s.domId }}">
+        <div style="padding:26px 0 14px;display:flex;align-items:baseline;gap:10px">
+          <span style="font-size:20px;font-weight:800;color:var(--ink,#171310)">{{ s.name }}</span>
+          <span style="font-size:12px;font-weight:600;color:var(--mut,#A79D93)">{{ s.count }}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:16px">
+          <sc-for list="{{ s.dishes }}" as="d" hint-placeholder-count="6">
+            <div onClick="{{ d.onOpen }}" style="background:var(--sf,#fff);border:1px solid var(--line,rgba(23,19,16,.08));border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column">
+              <div style="height:132px;background:repeating-linear-gradient(135deg,#EFE8DE 0 8px,#E5DCCF 8px 16px);position:relative;display:flex;align-items:flex-end;padding:7px">
+                <span style="font-family:ui-monospace,Menlo,monospace;font-size:8px;color:#8A8078;background:rgba(251,248,244,.86);border-radius:4px;padding:2px 5px">{{ d.ph }}</span>
+                <sc-if value="{{ d.hasBadge }}"><span style="position:absolute;top:0;left:0;background:var(--acc,#C5361D);color:#fff;font-size:9px;font-weight:800;padding:4px 7px;border-bottom-right-radius:9px">{{ d.badge }}</span></sc-if>
+              </div>
+              <div style="padding:12px 13px 13px;display:flex;flex-direction:column;gap:5px;flex:1">
+                <span style="font-size:14.5px;font-weight:700;color:var(--ink,#171310);line-height:1.25">{{ d.n }}</span>
+                <span style="font-size:11.5px;color:var(--mut,#8A8078);font-weight:500;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ d.d }}</span>
+                <div style="margin-top:auto;padding-top:9px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+                  <span style="font-size:16px;font-weight:800;color:var(--acc,#C5361D);white-space:nowrap">{{ d.priceLabel }}</span>
+                  <button onClick="{{ d.onOpen }}" style="border:0;cursor:pointer;font-family:inherit;background:{{ d.btnBg }};color:{{ d.btnFg }};font-size:12px;font-weight:800;border-radius:999px;padding:8px 14px">{{ d.btnLabel }}</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ noResults }}"><div style="padding:60px 24px;text-align:center;font-size:14px;color:var(--mut,#8A8078);font-weight:600">Aucun plat pour « {{ q }} »</div></sc-if>
+  </div>
+  <div style="border-left:1px solid var(--line,rgba(23,19,16,.08));background:var(--sf,#fff);display:flex;flex-direction:column;min-height:0">
+    <div style="flex:none;padding:18px 20px 12px;display:flex;align-items:baseline;justify-content:space-between">
+      <span style="font-size:16px;font-weight:800;color:var(--ink,#171310)">Mon panier</span>
+      <span style="font-size:12px;font-weight:700;color:var(--mut,#8A8078)">{{ countLabel }}</span>
+    </div>
+    <sc-if value="{{ showTier }}">
+    <div style="flex:none;margin:0 20px 12px;background:var(--tint,#FFF7EC);border-radius:12px;padding:11px 13px;display:flex;flex-direction:column;gap:7px">
+      <span style="font-size:11.5px;font-weight:700;color:var(--tinkc,#8A5B06);line-height:1.35">{{ tierText }}</span>
+      <div style="height:5px;border-radius:99px;background:rgba(0,0,0,.09);overflow:hidden"><div style="height:100%;border-radius:99px;background:var(--acc,#E0A422);width:{{ tierPct }}"></div></div>
+    </div>
+    </sc-if>
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:0 20px">
+      <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+        <div style="display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line,rgba(23,19,16,.06));align-items:flex-start">
+          <div style="width:48px;height:48px;flex:none;border-radius:10px;background:repeating-linear-gradient(135deg,#EFE8DE 0 6px,#E5DCCF 6px 12px)"></div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:13px;font-weight:700;color:var(--ink,#171310);line-height:1.25">{{ l.n }}</span>
+            <sc-if value="{{ l.hasOpts }}"><span style="font-size:10.5px;color:var(--mut,#8A8078);font-weight:500;line-height:1.35">{{ l.opts }}</span></sc-if>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px">
+              <span style="font-size:13.5px;font-weight:800;color:var(--ink,#171310)">{{ l.priceLabel }}</span>
+              <div style="display:flex;align-items:center;gap:9px">
+                <button onClick="{{ l.onMinus }}" style="border:1px solid var(--line,rgba(23,19,16,.15));background:transparent;color:var(--ink,#171310);width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:13px;line-height:1">−</button>
+                <span style="font-size:12.5px;font-weight:800;color:var(--ink,#171310);min-width:12px;text-align:center">{{ l.qty }}</span>
+                <button onClick="{{ l.onPlus }}" style="border:0;background:var(--acc,#C5361D);color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:13px;line-height:1">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ cartEmpty }}"><div style="padding:40px 0;text-align:center;font-size:12.5px;color:var(--mut,#8A8078);font-weight:600;line-height:1.5">Votre panier est vide.<br>Cliquez un plat pour le personnaliser.</div></sc-if>
+      <div style="padding:16px 0 8px;font-size:13px;font-weight:800;color:var(--ink,#171310)">Souvent commandé avec</div>
+      <sc-for list="{{ upsells }}" as="u" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+          <div style="width:38px;height:38px;flex:none;border-radius:9px;background:repeating-linear-gradient(135deg,#EFE8DE 0 6px,#E5DCCF 6px 12px)"></div>
+          <span style="flex:1;min-width:0;font-size:12.5px;font-weight:700;color:var(--ink,#171310);line-height:1.25">{{ u.n }}</span>
+          <span style="font-size:12.5px;font-weight:800;color:var(--ink,#171310)">{{ u.priceLabel }}</span>
+          <button onClick="{{ u.onAdd }}" style="border:1.5px solid var(--acc,#C5361D);background:transparent;color:var(--acc,#C5361D);font-family:inherit;font-size:11px;font-weight:800;border-radius:999px;padding:5px 10px;cursor:pointer;flex:none">Ajouter</button>
+        </div>
+      </sc-for>
+      <div style="height:16px"></div>
+    </div>
+    <div style="flex:none;border-top:1px solid var(--line,rgba(23,19,16,.08));padding:14px 20px 18px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;color:var(--mut,#5B534C)"><span>Sous-total</span><span>{{ subtotalLabel }}</span></div>
+      <sc-if value="{{ hasDiscount }}"><div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;color:#1E7A4C"><span>Remise palier 40 €</span><span>{{ discountLabel }}</span></div></sc-if>
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;color:var(--mut,#5B534C)"><span>{{ feeName }}</span><span>{{ feeLabel }}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:800;color:var(--ink,#171310);margin-top:2px"><span>Total</span><span>{{ totalLabel }}</span></div>
+      <button onClick="{{ goPay }}" disabled="{{ cartEmpty }}" style="margin-top:6px;border:0;cursor:{{ payCursor }};font-family:inherit;background:{{ payBg }};color:{{ payFg }};border-radius:14px;height:50px;font-size:14.5px;font-weight:800">{{ payLabel }}</button>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMenuMobile }}">
+<div style="flex:none;background:var(--sf,#fff);padding:6px 16px 12px;border-bottom:1px solid var(--line,rgba(23,19,16,.07))">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div style="display:flex;align-items:center;gap:9px;min-width:0">
+      <button onClick="{{ goHome }}" style="border:0;background:var(--soft,#F3EFE8);color:var(--ink,#171310);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;flex:none">‹</button>
+      <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
+        <span style="font-family:var(--disp,'Instrument Serif',Georgia,serif);font-size:21px;line-height:1.05;color:var(--ink,#171310)">Nomiya</span>
+        <span style="font-size:10.5px;font-weight:700;color:var(--acc,#C5361D);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ modeLabel }}</span>
+      </div>
+    </div>
+    <button onClick="{{ goHome }}" style="border:1.5px solid var(--line,rgba(23,19,16,.1));background:transparent;color:var(--mut,#8A8078);font-family:inherit;font-size:11px;font-weight:700;padding:7px 10px;border-radius:999px;cursor:pointer;flex:none">Changer</button>
+  </div>
+  <div style="margin-top:10px;display:flex;align-items:center;gap:8px;background:var(--soft,#F5F1EA);border-radius:12px;padding:0 12px;height:38px">
+    <span style="width:14px;height:14px;border:2px solid var(--mut,#8A8078);border-radius:50%;flex:none"></span>
+    <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Rechercher parmi 162 plats…" style="flex:1;border:0;background:transparent;outline:none;font-size:13.5px;font-weight:500;color:var(--ink,#171310);min-width:0">
+    <sc-if value="{{ hasQ }}"><button onClick="{{ clearQ }}" style="border:0;background:var(--line,#E4DED4);color:var(--ink,#5B534C);width:20px;height:20px;border-radius:50%;font-size:12px;line-height:1;cursor:pointer;flex:none">×</button></sc-if>
+  </div>
+</div>
+
+<sc-if value="{{ showTier }}">
+<div style="flex:none;background:var(--tint,#FFF7EC);border-bottom:1px solid var(--line,rgba(224,164,34,.28));padding:9px 16px 10px;display:flex;flex-direction:column;gap:6px">
+  <span style="font-size:12px;font-weight:700;color:var(--tinkc,#8A5B06)">{{ tierText }}</span>
+  <div style="height:5px;border-radius:99px;background:rgba(0,0,0,.09);overflow:hidden"><div style="height:100%;border-radius:99px;background:var(--acc,#E0A422);width:{{ tierPct }}"></div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showTabs }}">
+<div style="flex:none;background:var(--sf,#fff);border-bottom:1px solid var(--line,rgba(23,19,16,.07));display:flex;gap:7px;overflow-x:auto;padding:9px 14px 10px">
+  <sc-for list="{{ cats }}" as="c" hint-placeholder-count="8">
+    <button onClick="{{ c.onPick }}" style="flex:none;border:1.5px solid {{ c.chipBc }};background:{{ c.chipBg }};color:{{ c.chipFg }};cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:{{ c.fw }};border-radius:999px;padding:8px 13px;white-space:nowrap">{{ c.name }}</button>
+  </sc-for>
+</div>
+</sc-if>
+
+<div style="flex:1;min-height:0;display:flex">
+  <sc-if value="{{ showSidebar }}">
+  <div style="width:98px;flex:none;overflow-y:auto;background:var(--soft,#F5F1EA);border-right:1px solid var(--line,rgba(23,19,16,.06));padding-bottom:90px">
+    <sc-for list="{{ cats }}" as="c" hint-placeholder-count="12">
+      <button onClick="{{ c.onPick }}" style="width:100%;border:0;cursor:pointer;font-family:inherit;text-align:left;padding:12px 8px 12px 12px;background:{{ c.bg }};color:{{ c.fg }};font-size:11.5px;font-weight:{{ c.fw }};line-height:1.25;position:relative;display:flex;flex-direction:column;gap:3px">
+        <span style="position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:{{ c.bar }}"></span>
+        <span>{{ c.name }}</span>
+        <sc-if value="{{ c.hasBadge }}"><span style="align-self:flex-start;font-size:8.5px;font-weight:800;letter-spacing:.3px;color:#fff;background:var(--acc,#C5361D);border-radius:4px;padding:2px 4px">{{ c.badge }}</span></sc-if>
+      </button>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <div ref="{{ listRef }}" onScroll="{{ onScroll }}" style="flex:1;min-width:0;overflow-y:auto;background:var(--bg,#FBF8F4);padding-bottom:110px">
+    <sc-for list="{{ sections }}" as="s" hint-placeholder-count="3">
+      <div id="{{ s.domId }}">
+        <div style="padding:14px 14px 8px;display:flex;align-items:baseline;gap:8px">
+          <span style="font-size:14.5px;font-weight:800;color:var(--ink,#171310)">{{ s.name }}</span>
+          <span style="font-size:11px;font-weight:600;color:var(--mut,#A79D93)">{{ s.count }}</span>
+        </div>
+        <sc-for list="{{ s.dishes }}" as="d" hint-placeholder-count="4">
+          <div onClick="{{ d.onOpen }}" style="display:flex;gap:11px;padding:12px 14px 14px;border-bottom:1px solid var(--line,rgba(23,19,16,.05));cursor:pointer;align-items:flex-start">
+            <div style="width:82px;height:82px;flex:none;border-radius:13px;overflow:hidden;background:repeating-linear-gradient(135deg,#EFE8DE 0 7px,#E5DCCF 7px 14px);display:flex;align-items:flex-end;padding:5px;position:relative">
+              <span style="font-family:ui-monospace,Menlo,monospace;font-size:7.5px;color:#8A8078;background:rgba(251,248,244,.86);border-radius:4px;padding:2px 4px;letter-spacing:-.2px">{{ d.ph }}</span>
+              <sc-if value="{{ d.hasBadge }}"><span style="position:absolute;top:0;left:0;background:var(--acc,#C5361D);color:#fff;font-size:8.5px;font-weight:800;padding:3px 5px;border-bottom-right-radius:8px;letter-spacing:.2px">{{ d.badge }}</span></sc-if>
+            </div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:14.5px;font-weight:700;color:var(--ink,#171310);line-height:1.25">{{ d.n }}</span>
+              <span style="font-size:11.5px;color:var(--mut,#8A8078);font-weight:500;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ d.d }}</span>
+              <sc-if value="{{ d.showSold }}"><span style="font-size:10.5px;color:var(--mut,#A79D93);font-weight:600">{{ d.sold }}</span></sc-if>
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:2px">
+                <span style="font-size:16px;font-weight:800;color:var(--acc,#C5361D);letter-spacing:-.3px;white-space:nowrap;flex:none">{{ d.priceLabel }}</span>
+                <button onClick="{{ d.onOpen }}" style="border:0;cursor:pointer;font-family:inherit;background:{{ d.btnBg }};color:{{ d.btnFg }};font-size:12px;font-weight:800;border-radius:999px;padding:0 12px;height:28px;min-width:28px;display:flex;align-items:center;justify-content:center">{{ d.btnLabel }}</button>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+    <sc-if value="{{ noResults }}"><div style="padding:60px 24px;text-align:center;font-size:13px;color:var(--mut,#8A8078);font-weight:600">Aucun plat pour « {{ q }} »</div></sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCart }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;background:var(--bg,#FBF8F4);width:100%;max-width:{{ colW }};margin:0 auto">
+  <div style="flex:none;background:var(--sf,#fff);padding:8px 14px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line,rgba(23,19,16,.07))">
+    <button onClick="{{ goMenu }}" style="border:0;background:var(--soft,#F3EFE8);color:var(--ink,#171310);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;flex:none">‹</button>
+    <span style="font-size:16px;font-weight:800;color:var(--ink,#171310)">Mon panier</span>
+    <span style="margin-left:auto;font-size:11.5px;font-weight:700;color:var(--mut,#8A8078)">{{ modeLabel }}</span>
+  </div>
+  <div style="flex:1;min-height:0;overflow-y:auto;padding-bottom:104px">
+    <sc-if value="{{ showTier }}">
+    <div style="background:var(--tint,#FFF7EC);padding:10px 16px 12px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--line,rgba(224,164,34,.28))">
+      <span style="font-size:12px;font-weight:700;color:var(--tinkc,#8A5B06)">{{ tierText }}</span>
+      <div style="height:5px;border-radius:99px;background:rgba(0,0,0,.09);overflow:hidden"><div style="height:100%;border-radius:99px;background:var(--acc,#E0A422);width:{{ tierPct }}"></div></div>
+    </div>
+    </sc-if>
+    <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+      <div style="display:flex;gap:11px;padding:13px 14px;border-bottom:1px solid var(--line,rgba(23,19,16,.05));align-items:flex-start">
+        <div style="width:56px;height:56px;flex:none;border-radius:11px;background:repeating-linear-gradient(135deg,#EFE8DE 0 7px,#E5DCCF 7px 14px)"></div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:13.5px;font-weight:700;color:var(--ink,#171310);line-height:1.25">{{ l.n }}</span>
+          <sc-if value="{{ l.hasOpts }}"><span style="font-size:11px;color:var(--mut,#8A8078);font-weight:500;line-height:1.35">{{ l.opts }}</span></sc-if>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">
+            <span style="font-size:14.5px;font-weight:800;color:var(--ink,#171310)">{{ l.priceLabel }}</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <button onClick="{{ l.onMinus }}" style="border:1px solid var(--line,rgba(23,19,16,.15));background:transparent;color:var(--ink,#171310);width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1">−</button>
+              <span style="font-size:13px;font-weight:800;color:var(--ink,#171310);min-width:14px;text-align:center">{{ l.qty }}</span>
+              <button onClick="{{ l.onPlus }}" style="border:0;background:var(--acc,#C5361D);color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ cartEmpty }}"><div style="padding:70px 30px;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center"><span style="font-size:13.5px;color:var(--mut,#8A8078);font-weight:600">Votre panier est vide</span><button onClick="{{ goMenu }}" style="border:0;background:var(--acc,#C5361D);color:#fff;font-family:inherit;font-size:13px;font-weight:700;padding:11px 18px;border-radius:999px;cursor:pointer">Voir la carte</button></div></sc-if>
+
+    <div style="padding:18px 14px 8px;display:flex;align-items:baseline;gap:8px">
+      <span style="font-size:14.5px;font-weight:800;color:var(--ink,#171310)">Souvent commandé avec</span>
+      <span style="font-size:11px;font-weight:600;color:var(--mut,#A79D93)">{{ upsellNote }}</span>
+    </div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding:2px 14px 14px">
+      <sc-for list="{{ upsells }}" as="u" hint-placeholder-count="4">
+        <div style="width:124px;flex:none;background:var(--sf,#fff);border:1px solid var(--line,rgba(23,19,16,.07));border-radius:14px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="height:74px;background:repeating-linear-gradient(135deg,#EFE8DE 0 7px,#E5DCCF 7px 14px)"></div>
+          <div style="padding:8px 9px 10px;display:flex;flex-direction:column;gap:5px">
+            <span style="font-size:12px;font-weight:700;color:var(--ink,#171310);line-height:1.2;height:29px;overflow:hidden">{{ u.n }}</span>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:13px;font-weight:800;color:var(--acc,#C5361D)">{{ u.priceLabel }}</span>
+              <button onClick="{{ u.onAdd }}" style="border:0;background:var(--acc,#C5361D);color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1">+</button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ showSideRail }}">
+    <div style="margin:2px 14px 16px;background:var(--sf,#fff);border:1px solid var(--line,rgba(23,19,16,.07));border-radius:16px;overflow:hidden">
+      <div style="display:flex;border-bottom:1px solid var(--line,rgba(23,19,16,.07))">
+        <sc-for list="{{ railTabs }}" as="rt" hint-placeholder-count="2">
+          <button onClick="{{ rt.onPick }}" style="flex:1;border:0;cursor:pointer;font-family:inherit;background:{{ rt.bg }};color:{{ rt.fg }};font-size:12.5px;font-weight:800;padding:11px 0">{{ rt.n }}</button>
+        </sc-for>
+      </div>
+      <sc-for list="{{ rail }}" as="r" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:11px;padding:10px 12px;border-bottom:1px solid var(--line,rgba(23,19,16,.05))">
+          <div style="width:40px;height:40px;flex:none;border-radius:9px;background:repeating-linear-gradient(135deg,#EFE8DE 0 6px,#E5DCCF 6px 12px)"></div>
+          <span style="flex:1;min-width:0;font-size:12.5px;font-weight:700;color:var(--ink,#171310);line-height:1.25">{{ r.n }}</span>
+          <span style="font-size:12.5px;font-weight:800;color:var(--ink,#171310)">{{ r.priceLabel }}</span>
+          <button onClick="{{ r.onAdd }}" style="border:1.5px solid var(--acc,#C5361D);background:transparent;color:var(--acc,#C5361D);font-family:inherit;font-size:11.5px;font-weight:800;border-radius:999px;padding:6px 11px;cursor:pointer;flex:none">Ajouter</button>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <div style="margin:4px 14px 24px;background:var(--sf,#fff);border:1px solid var(--line,rgba(23,19,16,.07));border-radius:16px;padding:14px 15px;display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--mut,#5B534C)"><span>Sous-total</span><span>{{ subtotalLabel }}</span></div>
+      <sc-if value="{{ hasDiscount }}"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#1E7A4C"><span>Remise palier 40 €</span><span>{{ discountLabel }}</span></div></sc-if>
+      <sc-if value="{{ hasPromo }}"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#1E7A4C"><span>Code NOMIYA10</span><span>{{ promoLabel }}</span></div></sc-if>
+      <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--mut,#5B534C)"><span>{{ feeName }}</span><span>{{ feeLabel }}</span></div>
+      <div style="height:1px;background:var(--line,rgba(23,19,16,.08))"></div>
+      <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:800;color:var(--ink,#171310)"><span>Total</span><span>{{ totalLabel }}</span></div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPay }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;background:var(--bg,#FBF8F4);width:100%;max-width:{{ colW }};margin:0 auto">
+  <div style="flex:none;background:var(--sf,#fff);padding:8px 14px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line,rgba(23,19,16,.07))">
+    <button onClick="{{ goCart }}" style="border:0;background:var(--soft,#F3EFE8);color:var(--ink,#171310);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;flex:none">‹</button>
+    <span style="font-size:16px;font-weight:800;color:var(--ink,#171310)">Récapitulatif</span>
+  </div>
+  <div style="flex:1;min-height:0;overflow-y:auto;padding:14px 14px 110px;display:flex;flex-direction:column;gap:12px">
+    <div style="background:var(--sf,#fff);border:1px solid var(--line,rgba(23,19,16,.07));border-radius:16px;padding:14px 15px;display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:13.5px;font-weight:800;color:var(--ink,#171310)">{{ destTitle }}</span>
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <span style="width:34px;height:34px;flex:none;border-radius:10px;background:var(--soft,#F3EFE8)"></span>
+        <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--mut,#8A8078);line-height:1.45">{{ destLine }}</span>
+        <button style="border:0;background:transparent;color:var(--acc,#C5361D);font-family:inherit;font-size:12px;font-weight:800;cursor:pointer">Modifier</button>
+      </div>
+      <div style="height:1px;background:var(--line,rgba(23,19,16,.08))"></div>
+      <span style="font-size:13.5px;font-weight:800;color:var(--ink,#171310)">Créneau</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ slots }}" as="sl" hint-placeholder-count="3">
+          <button onClick="{{ sl.onPick }}" style="border:1.5px solid {{ sl.bc }};background:{{ sl.bg }};color:{{ sl.fg }};cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;border-radius:999px;padding:8px 13px">{{ sl.n }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="background:var(--sf,#fff);border:1px solid var(--line,rgba(23,19,16,.07));border-radius:16px;padding:14px 15px;display:flex;flex-direction:column;gap:9px">
+      <span style="font-size:13.5px;font-weight:800;color:var(--ink,#171310)">Paiement</span>
+      <sc-for list="{{ pays }}" as="p" hint-placeholder-count="3">
+        <button onClick="{{ p.onPick }}" style="width:100%;border:1.5px solid {{ p.bc }};background:{{ p.bg }};cursor:pointer;font-family:inherit;border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;text-align:left">
+          <span style="width:18px;height:18px;flex:none;border-radius:50%;border:1.5px solid {{ p.mc }};background:{{ p.mbg }};color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;line-height:1">{{ p.mark }}</span>
+          <span style="flex:1;font-size:13.5px;font-weight:700;color:var(--ink,#171310)">{{ p.n }}</span>
+          <span style="font-size:11.5px;font-weight:600;color:var(--mut,#8A8078)">{{ p.sub }}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="background:var(--sf,#fff);border:1px solid var(--line,rgba(23,19,16,.07));border-radius:16px;padding:14px 15px;display:flex;flex-direction:column;gap:11px">
+      <span style="font-size:13.5px;font-weight:800;color:var(--ink,#171310)">Code promo</span>
+      <div style="display:flex;gap:8px">
+        <input value="{{ promo }}" onChange="{{ onPromo }}" placeholder="NOMIYA10" style="flex:1;border:1.5px solid var(--line,rgba(23,19,16,.12));background:var(--bg,#FBF8F4);border-radius:11px;padding:11px 12px;font-size:13px;font-weight:600;color:var(--ink,#171310);outline:none;min-width:0">
+        <span style="align-self:center;font-size:11.5px;font-weight:700;color:{{ promoColor }}">{{ promoState }}</span>
+      </div>
+      <div style="height:1px;background:var(--line,rgba(23,19,16,.08))"></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--mut,#5B534C)"><span>Sous-total · {{ countLabel }}</span><span>{{ subtotalLabel }}</span></div>
+      <sc-if value="{{ hasDiscount }}"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#1E7A4C"><span>Remise palier 40 €</span><span>{{ discountLabel }}</span></div></sc-if>
+      <sc-if value="{{ hasPromo }}"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#1E7A4C"><span>Code NOMIYA10</span><span>{{ promoLabel }}</span></div></sc-if>
+      <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--mut,#5B534C)"><span>{{ feeName }}</span><span>{{ feeLabel }}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:17px;font-weight:800;color:var(--ink,#171310)"><span>Total</span><span>{{ totalLabel }}</span></div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTrack }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;background:var(--bg,#FBF8F4);width:100%;max-width:{{ colW }};margin:0 auto">
+  <div style="height:150px;flex:none;background:repeating-linear-gradient(135deg,#EFE8DE 0 9px,#E5DCCF 9px 18px);display:flex;align-items:flex-end;padding:10px">
+    <span style="font-family:ui-monospace,Menlo,monospace;font-size:9px;color:#8A8078;background:rgba(255,255,255,.86);border-radius:5px;padding:3px 6px">carte / plan de livraison</span>
+  </div>
+  <div style="flex:1;min-height:0;overflow-y:auto;padding:18px 18px 30px;display:flex;flex-direction:column;gap:6px">
+    <span style="font-size:11.5px;font-weight:800;letter-spacing:.6px;color:var(--acc,#C5361D)">COMMANDE #4821</span>
+    <span style="font-family:var(--disp,'Instrument Serif',Georgia,serif);font-size:28px;line-height:1.15;color:var(--ink,#171310)">{{ trackTitle }}</span>
+    <span style="font-size:12.5px;font-weight:600;color:var(--mut,#8A8078);line-height:1.5">{{ trackSub }}</span>
+    <div style="margin-top:18px;display:flex;flex-direction:column">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+        <div style="display:flex;gap:13px;align-items:flex-start">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:none;width:18px">
+            <span style="width:14px;height:14px;border-radius:50%;border:2px solid {{ s.dotBc }};background:{{ s.dotBg }};animation:{{ s.anim }}"></span>
+            <span style="width:2px;height:{{ s.lineH }};background:{{ s.lineBg }}"></span>
+          </div>
+          <div style="flex:1;padding-bottom:14px;display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:13.5px;font-weight:800;color:{{ s.fg }}">{{ s.n }}</span>
+            <span style="font-size:11.5px;font-weight:600;color:var(--mut,#8A8078)">{{ s.sub }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:4px;background:var(--sf,#fff);border:1px solid var(--line,rgba(23,19,16,.07));border-radius:16px;padding:14px 15px;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--ink,#171310)"><span>{{ countLabel }}</span><span>{{ totalLabel }}</span></div>
+      <span style="font-size:11.5px;font-weight:600;color:var(--mut,#8A8078);line-height:1.45">{{ trackFoot }}</span>
+    </div>
+    <button onClick="{{ reset }}" style="margin-top:14px;border:1.5px solid var(--line,rgba(23,19,16,.14));background:transparent;color:var(--ink,#171310);font-family:inherit;font-size:13px;font-weight:800;padding:13px;border-radius:14px;cursor:pointer">Nouvelle commande</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showBar }}">
+<div style="position:absolute;left:0;right:0;bottom:0;width:100%;max-width:{{ colW }};margin:0 auto;padding:12px 14px 22px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,var(--bg,#FBF8F4) 34%)">
+  <button onClick="{{ barAction }}" style="width:100%;border:0;cursor:pointer;font-family:inherit;background:var(--elev,#171310);color:#FFFFFF;border-radius:16px;height:56px;padding:0 14px 0 12px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(23,19,16,.22)">
+    <span style="width:34px;height:34px;border-radius:10px;background:var(--acc,#C5361D);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex:none">{{ count }}</span>
+    <span style="display:flex;flex-direction:column;align-items:flex-start;gap:1px">
+      <span style="font-size:16px;font-weight:800;letter-spacing:-.2px">{{ totalLabel }}</span>
+      <span style="font-size:10.5px;font-weight:600;opacity:.65">{{ barSub }}</span>
+    </span>
+    <span style="margin-left:auto;font-size:13.5px;font-weight:800;background:var(--acc,#C5361D);border-radius:12px;padding:10px 16px">{{ barCta }}</span>
+  </button>
+</div>
+</sc-if>
+
+<sc-if value="{{ sheetOpen }}">
+<sc-if value="{{ sheetScrim }}"><div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(23,19,16,.45);z-index:5"></div></sc-if>
+<div style="position:absolute;left:0;right:0;bottom:{{ sheetBottom }};top:{{ sheetTop }};width:100%;max-width:{{ sheetW }};margin:0 auto;z-index:6;background:var(--sf,#fff);border-radius:{{ sheetRadius }};display:flex;flex-direction:column;overflow:hidden;box-shadow:0 18px 60px rgba(23,19,16,.28)">
+  <div style="flex:none;position:relative;height:{{ heroH }};background:repeating-linear-gradient(135deg,#EFE8DE 0 8px,#E5DCCF 8px 16px);display:flex;align-items:flex-end;padding:10px">
+    <span style="font-family:ui-monospace,Menlo,monospace;font-size:9px;color:#8A8078;background:rgba(255,255,255,.86);border-radius:5px;padding:3px 6px">{{ sheetPh }}</span>
+    <button onClick="{{ closeSheet }}" style="position:absolute;top:12px;right:12px;border:0;background:rgba(255,255,255,.92);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;color:#171310;line-height:1">×</button>
+  </div>
+  <div style="flex:1;min-height:0;overflow-y:auto;padding:16px 18px 20px">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="font-size:19px;font-weight:800;color:var(--ink,#171310);line-height:1.2">{{ sheetName }}</span>
+      <span style="font-size:12.5px;color:var(--mut,#8A8078);font-weight:500;line-height:1.45">{{ sheetDesc }}</span>
+      <span style="font-size:18px;font-weight:800;color:var(--acc,#C5361D);margin-top:2px">{{ sheetBase }}</span>
+    </div>
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span style="font-size:14px;font-weight:800;color:var(--ink,#171310)">{{ g.label }}</span>
+          <span style="font-size:10.5px;font-weight:700;color:{{ g.hintColor }};background:{{ g.hintBg }};border-radius:5px;padding:2px 6px">{{ g.hint }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <sc-for list="{{ g.opts }}" as="o" hint-placeholder-count="3">
+            <button onClick="{{ o.onPick }}" style="width:100%;border:1.5px solid {{ o.bc }};background:{{ o.bg }};cursor:pointer;font-family:inherit;border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;text-align:left">
+              <span style="width:18px;height:18px;flex:none;border-radius:{{ o.markRadius }};border:1.5px solid {{ o.mc }};background:{{ o.mbg }};color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;line-height:1">{{ o.mark }}</span>
+              <span style="flex:1;font-size:13.5px;font-weight:600;color:var(--ink,#171310)">{{ o.n }}</span>
+              <span style="font-size:13px;font-weight:700;color:{{ o.pc }}">{{ o.pLabel }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ showSheetUpsell }}">
+    <div style="margin-top:20px;display:flex;flex-direction:column;gap:9px">
+      <span style="font-size:14px;font-weight:800;color:var(--ink,#171310)">On y ajoute souvent</span>
+      <sc-for list="{{ sheetAdds }}" as="a" hint-placeholder-count="3">
+        <button onClick="{{ a.onAdd }}" style="width:100%;border:1.5px solid var(--line,rgba(23,19,16,.10));background:transparent;cursor:pointer;font-family:inherit;border-radius:12px;padding:10px 13px;display:flex;align-items:center;gap:11px;text-align:left">
+          <span style="width:34px;height:34px;flex:none;border-radius:9px;background:repeating-linear-gradient(135deg,#EFE8DE 0 6px,#E5DCCF 6px 12px)"></span>
+          <span style="flex:1;font-size:13px;font-weight:700;color:var(--ink,#171310)">{{ a.n }}</span>
+          <span style="font-size:12.5px;font-weight:800;color:var(--acc,#C5361D)">+ {{ a.priceLabel }}</span>
+        </button>
+      </sc-for>
+    </div>
+    </sc-if>
+    <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:14px;font-weight:800;color:var(--ink,#171310)">Note pour la cuisine</span>
+      <input value="{{ note }}" onChange="{{ onNote }}" placeholder="Sans wasabi, sauce à part…" style="width:100%;border:1.5px solid var(--line,rgba(23,19,16,.12));background:var(--bg,#FBF8F4);border-radius:12px;padding:12px 13px;font-size:13px;font-weight:500;color:var(--ink,#171310);outline:none">
+    </div>
+  </div>
+  <div style="flex:none;border-top:1px solid var(--line,rgba(23,19,16,.08));padding:12px 16px 20px;display:flex;align-items:center;gap:12px;background:var(--sf,#fff)">
+    <div style="display:flex;align-items:center;gap:12px;border:1.5px solid var(--line,rgba(23,19,16,.12));border-radius:999px;padding:6px 10px;flex:none">
+      <button onClick="{{ dec }}" style="border:0;background:transparent;color:var(--ink,#171310);font-size:17px;cursor:pointer;line-height:1;width:16px">−</button>
+      <span style="font-size:14px;font-weight:800;color:var(--ink,#171310);min-width:14px;text-align:center">{{ qty }}</span>
+      <button onClick="{{ inc }}" style="border:0;background:transparent;color:var(--acc,#C5361D);font-size:17px;cursor:pointer;line-height:1;width:16px">+</button>
+    </div>
+    <button onClick="{{ addToCart }}" style="flex:1;border:0;cursor:pointer;font-family:inherit;background:var(--acc,#C5361D);color:#fff;border-radius:14px;height:50px;font-size:14.5px;font-weight:800;display:flex;align-items:center;justify-content:center">Ajouter · {{ sheetTotal }}</button>
+  </div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;vue&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Auto&quot;,&quot;Téléphone&quot;,&quot;Ordinateur&quot;],&quot;default&quot;:&quot;Auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Variantes&quot;},&quot;navigationPc&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sidebar + panier&quot;,&quot;Catégories en haut&quot;],&quot;default&quot;:&quot;Sidebar + panier&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Variantes&quot;},&quot;navigation&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sidebar catégories&quot;,&quot;Onglets horizontaux&quot;],&quot;default&quot;:&quot;Sidebar catégories&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Variantes&quot;},&quot;ficheplat&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Bottom sheet&quot;,&quot;Page pleine&quot;],&quot;default&quot;:&quot;Bottom sheet&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Variantes&quot;},&quot;upsells&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Discret&quot;,&quot;Équilibré&quot;,&quot;Maximal&quot;],&quot;default&quot;:&quot;Équilibré&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Variantes&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Encre &amp; vermillon&quot;,&quot;Nuit indigo&quot;,&quot;Papier &amp; sumi&quot;],&quot;default&quot;:&quot;Encre &amp; vermillon&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Variantes&quot;}}">
+const G = {
+  sushiX:{id:'sx',label:'Options',type:'multi',max:3,opts:[{n:'Wasabi frais râpé',p:1.2},{n:'Gingembre en plus',p:.6},{n:'Sauce soja sucrée',p:.6},{n:'Sans wasabi',p:0}]},
+  rizType:{id:'rz',label:'Riz',type:'single',req:true,opts:[{n:'Riz vinaigré blanc',p:0},{n:'Riz complet',p:1},{n:'Sans riz (sashimi style)',p:0}]},
+  pieces:{id:'pc',label:'Format',type:'single',req:true,opts:[{n:'6 pièces',p:0},{n:'12 pièces',p:7.5},{n:'18 pièces',p:14}]},
+  paire:{id:'pr',label:'Quantité',type:'single',req:true,opts:[{n:'2 pièces',p:0},{n:'4 pièces',p:2.6},{n:'8 pièces',p:5.9}]},
+  taille:{id:'tz',label:'Taille',type:'single',req:true,opts:[{n:'Normale',p:0},{n:'Grande (+30 %)',p:2.5}]},
+  piment:{id:'sp',label:'Niveau de piment',type:'single',req:true,opts:[{n:'Doux',p:0},{n:'Moyen',p:0},{n:'Fort',p:0}]},
+  ramenX:{id:'rx',label:'Suppléments',type:'multi',max:4,opts:[{n:'Œuf mollet mariné',p:1.5},{n:'Chashu de porc (2 tr.)',p:3},{n:'Double nouilles',p:2},{n:'Pousses de bambou',p:1},{n:'Maïs doux',p:1},{n:'Nori supplémentaire',p:.8}]},
+  base:{id:'bs',label:'Accompagnement',type:'single',req:true,opts:[{n:'Riz blanc',p:0},{n:'Riz vinaigré',p:.8},{n:'Nouilles soba',p:2},{n:'Salade de chou',p:1.2}]},
+  wokX:{id:'wx',label:'Suppléments',type:'multi',max:3,opts:[{n:'Bœuf émincé',p:3.5},{n:'Crevettes (5)',p:4},{n:'Tofu grillé',p:2},{n:'Légumes croquants',p:1.5}]},
+  cuisson:{id:'cu',label:'Cuisson',type:'single',req:true,opts:[{n:'Saignant',p:0},{n:'À point',p:0},{n:'Bien cuit',p:0}]},
+  sauceBro:{id:'sb',label:'Sauce',type:'single',req:true,opts:[{n:'Tare (soja sucré)',p:0},{n:'Sel & citron',p:0},{n:'Piment yuzu',p:.5}]},
+  formule:{id:'fe',label:'Entrée incluse',type:'single',req:true,opts:[{n:'Soupe miso',p:0},{n:'Salade de chou',p:0},{n:'Edamame',p:.5},{n:'Gyoza (3)',p:2}]},
+  boisson:{id:'bo',label:'Boisson incluse',type:'single',req:true,opts:[{n:'Thé vert glacé',p:0},{n:'Coca 33 cl',p:0},{n:'Ramune litchi',p:1},{n:'Bière Asahi 33 cl',p:2}]},
+  dessert:{id:'de',label:'Ajouter un dessert',type:'single',opts:[{n:'Mochi glacé',p:3.5},{n:'Cheesecake yuzu',p:4.2},{n:'Perles de coco',p:3.2}]},
+  couverts:{id:'cv',label:'Couverts',type:'single',req:true,opts:[{n:'Baguettes',p:0},{n:'Baguettes + couverts',p:0},{n:'Aucun (zéro déchet)',p:0}]}
+};
+
+const RAW = [
+  ['pop','Les + commandés','TOP',['sushiX'],[
+    ['Plateau Nomiya 18 pièces','Saumon, thon, crevette, avocat, california',26.9],
+    ['Chirashi saumon','Riz vinaigré, saumon Label Rouge, avocat, tobiko',17.9],
+    ['Sushi saumon (2)','Riz vinaigré, saumon tranché épais',5.4],
+    ['California avocat-crevette (6)','Sésame blanc, mayonnaise japonaise',8.9],
+    ['Gyoza au porc (6)','Grillés à la poêle, sauce ponzu',7.5],
+    ['Ramen tonkotsu','Bouillon de porc 18 h, chashu, œuf mollet',15.9],
+    ['Poké bowl saumon','Edamame, mangue, radis, sauce sésame',14.9],
+    ['Yakitori poulet-ciboule (2)','Sauce tare, sésame torréfié',5.9]
+  ]],
+  ['men','Menus & Formules','-15%',['formule','boisson','dessert'],[
+    ['Menu Midi Sushi','Entrée + 12 pièces + boisson',18.9],
+    ['Menu Midi Chaud','Entrée + plat chaud + boisson',17.5],
+    ['Menu Ramen complet','Gyoza (3) + ramen au choix + boisson',22.9],
+    ['Menu Chirashi','Soupe miso + chirashi + boisson',21.9],
+    ['Menu Végétarien','Edamame + maki légumes + boisson',16.9],
+    ['Formule Duo à partager','2 entrées, 24 pièces, 2 boissons, 2 desserts',49.9],
+    ['Formule Izakaya','5 petites assiettes + 2 boissons',38.9],
+    ['Plateau Famille (4 pers.)','48 pièces, 2 entrées, 4 desserts',89.9],
+    ['Menu Enfant','6 pièces au choix + jus + mochi',12.9],
+    ['Menu Découverte Chef','7 services surprise du chef',54.9]
+  ]],
+  ['efr','Entrées froides','',['sushiX'],[
+    ['Edamame au sel de Guérande','Fèves de soja vapeur',4.9],
+    ['Salade de chou au sésame','Chou blanc, vinaigre de riz',4.5],
+    ['Salade wakame','Algues marinées, sésame',5.9],
+    ['Tataki de thon (4 tr.)','Croûte de sésame, ponzu',12.9],
+    ['Carpaccio de daurade','Yuzu, huile d\u2019olive, ciboulette',13.5],
+    ['Sunomono concombre','Concombre mariné, vinaigre doux',4.9],
+    ['Tofu froid hiyayakko','Soja soyeux, bonite séchée, ciboule',6.5],
+    ['Poulpe mariné au yuzu','Poulpe tendre, zestes',9.9],
+    ['Salade d\u2019avocat-crabe','Chair de crabe, mayonnaise japonaise',10.5],
+    ['Kimchi de chou','Fermenté maison, piment doux',5.5]
+  ]],
+  ['ech','Entrées chaudes','',['pieces','piment'],[
+    ['Gyoza au porc (6)','Grillés, sauce ponzu',7.5],
+    ['Gyoza aux légumes (6)','Chou, carotte, gingembre',7.2],
+    ['Har gow crevettes (4)','Pâte translucide vapeur',7.9],
+    ['Siu mai porc-crevette (4)','Vapeur, tobiko',7.5],
+    ['Bao au porc laqué (2)','Pain vapeur, concombre, cacahuètes',8.9],
+    ['Bao au poulet frit (2)','Panure croustillante, mayo épicée',8.9],
+    ['Croquettes de crevette (5)','Panko, sauce tartare japonaise',8.5],
+    ['Ailes de poulet karaage','Marinées soja-gingembre',8.9],
+    ['Tempura de légumes (6)','Pâte légère, sauce tentsuyu',8.5],
+    ['Tempura de crevettes (4)','Grosses crevettes, sauce tentsuyu',10.9],
+    ['Soupe miso','Tofu, wakame, ciboule',3.9],
+    ['Soupe won-ton','Raviolis crevette, bouillon volaille',8.9]
+  ]],
+  ['sus','Sushi à la pièce','',['paire','rizType','sushiX'],[
+    ['Sushi saumon','Saumon Label Rouge',2.7],
+    ['Sushi thon rouge','Thon ligne',3.4],
+    ['Sushi daurade','Daurade royale',2.9],
+    ['Sushi crevette','Crevette marinée',2.7],
+    ['Sushi anguille laquée','Unagi, sauce kabayaki',3.9],
+    ['Sushi saumon braisé','Flambé, sauce miso',3.1],
+    ['Sushi thon blanc','Germon, ciboulette',3.1],
+    ['Sushi omelette tamago','Omelette sucrée',2.3],
+    ['Sushi avocat','Avocat mûr, sésame',2.2],
+    ['Sushi Saint-Jacques','Noix de Saint-Jacques',3.9],
+    ['Sushi maquereau','Maquereau mariné',2.6],
+    ['Sushi poulpe','Poulpe cuit, ponzu',2.9],
+    ['Sushi tobiko','Œufs de poisson volant',3.2],
+    ['Sushi crabe-mayo','Chair de crabe, mayo japonaise',2.9],
+    ['Sushi tofu inari','Poche de tofu sucrée',2.2],
+    ['Sushi foie gras-anguille','Édition limitée du chef',5.9]
+  ]],
+  ['sas','Sashimi','',['pieces','sushiX'],[
+    ['Sashimi saumon (6)','Tranché épais du jour',11.9],
+    ['Sashimi thon rouge (6)','Thon ligne',14.9],
+    ['Sashimi daurade (6)','Daurade royale',12.5],
+    ['Sashimi mixte (9)','Saumon, thon, daurade',16.9],
+    ['Sashimi Saint-Jacques (5)','Fraîches, fleur de sel',15.9],
+    ['Sashimi anguille (5)','Laquée, tiède',15.5],
+    ['Sashimi maquereau (6)','Mariné au vinaigre',11.5],
+    ['Sashimi thon blanc (6)','Germon, huile de sésame',12.9],
+    ['Sashimi du chef (12)','Sélection du marché',26.9],
+    ['Tartare de saumon','Ciboule, sésame, yuzu',12.9]
+  ]],
+  ['mak','Makis','',['pieces','rizType','sushiX'],[
+    ['Maki saumon (6)','Saumon, nori, riz vinaigré',5.9],
+    ['Maki thon (6)','Thon rouge',6.5],
+    ['Maki concombre (6)','Concombre croquant',4.9],
+    ['Maki avocat (6)','Avocat mûr',5.2],
+    ['Maki saumon-avocat (6)','Duo classique',6.5],
+    ['Maki thon épicé (6)','Sauce sriracha, ciboule',6.9],
+    ['Maki crevette tempura (6)','Croustillant, mayo',7.5],
+    ['Maki anguille-concombre (6)','Unagi, sauce kabayaki',8.5],
+    ['Maki tamago (6)','Omelette sucrée',5.2],
+    ['Maki radis mariné (6)','Takuan croquant',4.9],
+    ['Maki poulet teriyaki (6)','Poulet laqué, ciboule',6.5],
+    ['Maki cheese-saumon (6)','Fromage frais, ciboulette',6.9],
+    ['Maki végétarien (6)','Avocat, concombre, carotte',5.5],
+    ['Maki foie gras-figue (6)','Édition limitée',11.9]
+  ]],
+  ['cal','California & Spring','',['pieces','sushiX'],[
+    ['California saumon-avocat (6)','Sésame blanc',7.9],
+    ['California crevette-avocat (6)','Mayonnaise japonaise',8.9],
+    ['California thon-mangue (6)','Fruité, sésame noir',9.5],
+    ['California crabe-concombre (6)','Chair de crabe',8.5],
+    ['California poulet croustillant (6)','Panko, sauce épicée',8.5],
+    ['California végétarien (6)','Avocat, mangue, concombre',7.5],
+    ['Spring saumon-cheese (6)','Roulé sans riz, feuille de soja',8.9],
+    ['Spring thon-avocat (6)','Roulé sans riz',9.5],
+    ['Spring crevette-mangue (6)','Frais, sans riz',9.5],
+    ['Spring végétarien (6)','Légumes croquants, sans riz',7.9],
+    ['Dragon roll (8)','Anguille, avocat, sauce kabayaki',13.9],
+    ['Rainbow roll (8)','Assortiment de poissons crus',14.5],
+    ['Crispy roll saumon (6)','Oignons frits, sauce épicée',9.9],
+    ['Flambé roll (6)','Saumon flambé, miso',10.5]
+  ]],
+  ['bwl','Chirashi & Poké','',['rizType','sushiX'],[
+    ['Chirashi saumon','Riz vinaigré, saumon, avocat',17.9],
+    ['Chirashi thon','Thon rouge, tobiko',19.9],
+    ['Chirashi mixte','Saumon, thon, daurade',21.5],
+    ['Poké bowl saumon','Edamame, mangue, radis',14.9],
+    ['Poké bowl thon épicé','Sauce sriracha, avocat',15.9],
+    ['Poké bowl poulet teriyaki','Poulet laqué, chou rouge',13.9],
+    ['Poké bowl tofu','Tofu grillé, légumes marinés',12.9],
+    ['Sashimi don du chef','Poissons du jour sur riz tiède',24.9]
+  ]],
+  ['pla','Plateaux à partager','PARTAGE',['sushiX','couverts'],[
+    ['Plateau Découverte 12 p.','Sushi, maki, california',17.9],
+    ['Plateau Nomiya 18 p.','Best-sellers de la maison',26.9],
+    ['Plateau Saumon 24 p.','Tout saumon',31.9],
+    ['Plateau Mixte 30 p.','Sushi, maki, california, spring',39.9],
+    ['Plateau Prestige 36 p.','Thon rouge, Saint-Jacques, anguille',54.9],
+    ['Plateau Végétarien 18 p.','Légumes, tofu, avocat',22.9],
+    ['Plateau Sashimi 24 tr.','Trois poissons du marché',44.9],
+    ['Plateau Duo 24 p.','Pour deux, avec soupes miso',34.9],
+    ['Plateau Famille 48 p.','Pour quatre, avec desserts',79.9],
+    ['Plateau Apéro froid','Tataki, carpaccio, edamame',29.9]
+  ]],
+  ['yak','Yakitori & Grillades','',['paire','sauceBro'],[
+    ['Yakitori poulet-ciboule','Sauce tare, sésame',5.9],
+    ['Yakitori poulet-fromage','Fondant, poivre',6.5],
+    ['Yakitori bœuf-fromage','Bœuf fin roulé',7.5],
+    ['Yakitori porc-asperge','Asperge verte croquante',6.9],
+    ['Yakitori crevette','Grosses crevettes grillées',8.5],
+    ['Yakitori Saint-Jacques','Beurre yuzu',9.9],
+    ['Yakitori champignon shiitake','Végétarien',5.5],
+    ['Yakitori aubergine miso','Miso sucré, sésame noir',5.5],
+    ['Brochette de bœuf wagyu','Édition limitée, sel de Maldon',14.9],
+    ['Travers de porc laqués','Miel, cinq-épices',16.9],
+    ['Poulet karaage grillé','Mariné soja-gingembre',12.9],
+    ['Saumon grillé teriyaki','Filet épais, sauce maison',16.5]
+  ]],
+  ['ram','Ramen & Nouilles','',['taille','ramenX','piment'],[
+    ['Ramen tonkotsu','Bouillon de porc 18 h, chashu',15.9],
+    ['Ramen shoyu poulet','Bouillon clair, poulet grillé',14.5],
+    ['Ramen miso épicé','Miso rouge, huile de piment',15.5],
+    ['Ramen végétarien','Bouillon de champignons, tofu',13.9],
+    ['Ramen fruits de mer','Crevettes, moules, calamar',17.9],
+    ['Udon au bouillon dashi','Nouilles épaisses, tempura',13.5],
+    ['Yakisoba porc','Nouilles sautées, chou',14.5],
+    ['Yakisoba légumes','Wok, gingembre rouge',12.9],
+    ['Soba froides zaru','Sarrasin, sauce tsuyu',11.9],
+    ['Nouilles sautées crevettes','Wok grand feu, ail',15.9]
+  ]],
+  ['riz','Riz & Donburi','',['taille','base','wokX'],[
+    ['Riz vapeur','Riz japonais gohan',3.5],
+    ['Riz sauté aux légumes','Wok, sauce soja',8.9],
+    ['Gyudon bœuf','Bœuf mijoté, oignon doux',14.9],
+    ['Katsudon porc pané','Panure croustillante, œuf',15.5],
+    ['Oyakodon poulet','Poulet, œuf, dashi',14.5],
+    ['Curry japonais poulet','Curry doux, riz blanc',14.9],
+    ['Curry japonais légumes','Curry doux, légumes rôtis',13.5],
+    ['Bibimbap végétarien','Légumes marinés, gochujang',13.5]
+  ]],
+  ['des','Desserts','',[],[
+    ['Mochi glacé (3)','Matcha, sésame noir, mangue',6.5],
+    ['Cheesecake yuzu','Biscuit sésame, coulis',6.9],
+    ['Perles de coco (3)','Haricot rouge, coco râpée',5.5],
+    ['Beignets de banane','Miel, sésame',5.9],
+    ['Dorayaki','Pancake fourré haricot rouge',5.5],
+    ['Glace thé matcha','Deux boules',5.5],
+    ['Glace sésame noir','Deux boules',5.5],
+    ['Salade d\u2019ananas au gingembre','Frais, citron vert',5.2]
+  ]],
+  ['boi','Boissons','',[],[
+    ['Thé vert glacé maison 50 cl','Sencha infusé à froid',3.9],
+    ['Thé vert chaud','Théière pour deux',4.5],
+    ['Ramune litchi','Limonade japonaise pétillante',4.5],
+    ['Ramune yuzu','Limonade japonaise pétillante',4.5],
+    ['Coca-Cola 33 cl','Canette fraîche',2.9],
+    ['Coca Zéro 33 cl','Canette fraîche',2.9],
+    ['Eau plate 50 cl','Source',2.5],
+    ['Eau pétillante 50 cl','Finement pétillante',2.9],
+    ['Bière Asahi 33 cl','Blonde japonaise',5.5],
+    ['Bière Kirin 33 cl','Blonde japonaise',5.5],
+    ['Saké chaud 15 cl','Junmai, servi tiède',7.9],
+    ['Umeshu glaçons 8 cl','Liqueur de prune',7.5]
+  ]]
+];
+
+const BADGES = {'Plateau Nomiya 18 pièces':'N°1','Chirashi saumon':'TOP 2','Gyoza au porc (6)':'TOP 3','Menu Midi Sushi':'-15%','Menu Midi Chaud':'-15%','Sushi foie gras-anguille':'LIMITÉ','Maki foie gras-figue (6)':'LIMITÉ','Brochette de bœuf wagyu':'LIMITÉ','Plateau Famille 48 p.':'PARTAGE','Bao au porc laqué (2)':'NOUVEAU','Cheesecake yuzu':'NOUVEAU','Ramen tonkotsu':'TOP','Poké bowl saumon':'NOUVEAU'};
+
+let uid = 0;
+const CATS = RAW.map(([id, name, badge, g, items]) => ({
+  id, name, badge,
+  dishes: items.map(([n, d, p], i) => ({
+    id:'d'+(++uid), n, d, p, g, cat:id, ph:'photo ' + n.toLowerCase().split(' ').slice(0,2).join(' '),
+    badge: BADGES[n] || '', sold: 'Vendu ' + (60 + ((uid * 37) % 780)) + ' fois ce mois'
+  }))
+}));
+const ALL = CATS.flatMap(c => c.dishes);
+const byName = n => ALL.find(d => d.n === n);
+
+const THEMES = {
+  'Encre & vermillon':{bg:'#FBF8F4',sf:'#FFFFFF',ink:'#171310',mut:'#8A8078',line:'rgba(23,19,16,.09)',acc:'#C5361D',soft:'#F3EFE8',tint:'#FFF7EC',tinkc:'#8A5B06',elev:'#171310',disp:"'Instrument Serif',Georgia,serif"},
+  'Nuit indigo':{bg:'#14161C',sf:'#1B1E27',ink:'#F1EEE8',mut:'#8F94A3',line:'rgba(255,255,255,.10)',acc:'#E8734A',soft:'#232733',tint:'#232733',tinkc:'#E8B34A',elev:'#E8734A',disp:"'Instrument Serif',Georgia,serif"},
+  'Papier & sumi':{bg:'#F6F5F1',sf:'#FFFFFF',ink:'#1B1A17',mut:'#7C7970',line:'rgba(27,26,23,.10)',acc:'#1B1A17',soft:'#EDEBE4',tint:'#EDEBE4',tinkc:'#4A473F',elev:'#1B1A17',disp:"'DM Sans',system-ui,sans-serif"}
+};
+
+const eur = n => n.toFixed(2).replace('.', ',') + ' €';
+
+class Component extends DCLogic {
+  state = { view:'home', mode:'deliv', table:0, q:'', active:'pop', cart:[], sheet:null, sel:{}, qty:1, note:'', railTab:'Boissons', slot:0, pay:0, promo:'', track:0, shown:4, w: typeof window !== 'undefined' ? window.innerWidth : 390 };
+
+  componentDidMount() {
+    this.onR = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this.onR);
+    this.onR();
+  }
+
+  componentWillUnmount() { clearInterval(this.timer); window.removeEventListener('resize', this.onR); }
+
+  scrollTo(id) {
+    const el = this.listEl && this.listEl.querySelector('#sec-' + id);
+    if (el) { this.lock = Date.now(); this.listEl.scrollTop += el.getBoundingClientRect().top - this.listEl.getBoundingClientRect().top; }
+  }
+
+  centerRail(idx) {
+    const r = this.railEl, tile = r && r.children[idx];
+    if (!tile) return;
+    const rr = r.getBoundingClientRect(), tr = tile.getBoundingClientRect();
+    r.scrollLeft += tr.left - rr.left - (r.clientWidth - tr.width) / 2;
+  }
+
+  openSheet(d) {
+    const sel = {};
+    (d.g || []).forEach(k => { const g = G[k]; sel[g.id] = g.type === 'single' ? (g.req ? 0 : -1) : []; });
+    this.setState({ sheet:d, sel, qty:1, note:'' });
+  }
+
+  unit() {
+    const d = this.state.sheet; if (!d) return 0;
+    let p = d.p;
+    (d.g || []).forEach(k => {
+      const g = G[k], s = this.state.sel[g.id];
+      if (g.type === 'single') { if (s >= 0 && g.opts[s]) p += g.opts[s].p; }
+      else (s || []).forEach(i => p += g.opts[i].p);
+    });
+    return p;
+  }
+
+  optLabel() {
+    const d = this.state.sheet, out = [];
+    (d.g || []).forEach(k => {
+      const g = G[k], s = this.state.sel[g.id];
+      if (g.type === 'single') { if (s >= 0 && g.opts[s]) out.push(g.opts[s].n); }
+      else (s || []).forEach(i => out.push(g.opts[i].n));
+    });
+    if (this.state.note) out.push('« ' + this.state.note + ' »');
+    return out.join(' · ');
+  }
+
+  push(n, unit, qty, opts) { this.setState(st => ({ cart:[...st.cart, { key:'l'+Date.now()+Math.random(), n, unit, qty, opts:opts||'' }] })); }
+  quickAdd(d) { this.push(d.n, d.p, 1, ''); }
+  bump(key, n) { this.setState(st => ({ cart: st.cart.map(l => l.key === key ? {...l, qty:l.qty+n} : l).filter(l => l.qty > 0) })); }
+
+  startTracking() {
+    this.setState({ view:'track', track:0 });
+    clearInterval(this.timer);
+    this.timer = setInterval(() => this.setState(st => {
+      if (st.track >= 3) { clearInterval(this.timer); return null; }
+      return { track: st.track + 1 };
+    }), 4000);
+  }
+
+  renderVals() {
+    const st = this.state, P = this.props;
+    const t = THEMES[P.theme] || THEMES['Encre & vermillon'];
+    const nav = P.navigation || 'Sidebar catégories';
+    const up = P.upsells || 'Équilibré';
+    const dishFull = (P.ficheplat || 'Bottom sheet') === 'Page pleine';
+    const vue = P.vue || 'Auto';
+    const forcedMobile = vue === 'Téléphone';
+    const desk = vue === 'Ordinateur' ? true : (forcedMobile ? false : st.w >= 900);
+    const topNav = (P.navigationPc || 'Sidebar + panier') === 'Catégories en haut';
+    const upN = up === 'Discret' ? 0 : (up === 'Maximal' ? 2 : 1);
+
+    const sub = st.cart.reduce((a, l) => a + l.unit * l.qty, 0);
+    const count = st.cart.reduce((a, l) => a + l.qty, 0);
+    const onSite = st.mode === 'table';
+    const discount = !onSite && sub >= 40 ? 5 : 0;
+    const promoOk = st.promo.trim().toUpperCase() === 'NOMIYA10';
+    const promoAmt = promoOk ? (sub - discount) * .1 : 0;
+    const fee = count > 0 && st.mode === 'deliv' ? (sub >= 30 ? 0 : 3.5) : 0;
+    const service = onSite ? 0 : 0;
+    const total = Math.max(0, sub - discount - promoAmt + fee + service);
+
+    let tierText, tierPct;
+    if (onSite) { tierText = 'Table ' + st.table + ' · les plats partent en cuisine dès validation'; tierPct = '100%'; }
+    else if (st.mode === 'deliv' && sub < 30) { tierText = 'Plus que ' + eur(30 - sub) + ' pour la livraison offerte'; tierPct = Math.min(100, sub/30*100) + '%'; }
+    else if (sub < 40) { tierText = (st.mode === 'deliv' ? 'Livraison offerte. ' : '') + 'Plus que ' + eur(40 - sub) + ' pour 5 € de remise'; tierPct = (sub/40*100) + '%'; }
+    else { tierText = 'Remise de 5 € débloquée. Palier maximal atteint'; tierPct = '100%'; }
+
+    const q = st.q.trim().toLowerCase();
+    const match = d => (d.n + ' ' + d.d).toLowerCase().includes(q);
+
+    const decorate = d => ({
+      ...d,
+      priceLabel: (d.g && d.g.length ? 'dès ' : '') + eur(d.p),
+      hasBadge: !!d.badge && upN > 0,
+      showSold: upN > 0,
+      btnLabel: d.g && d.g.length ? 'Choisir' : '+',
+      btnBg: d.g && d.g.length ? t.soft : t.acc,
+      btnFg: d.g && d.g.length ? t.acc : '#FFFFFF',
+      onOpen: e => { e.stopPropagation(); (d.g && d.g.length) ? this.openSheet(d) : this.quickAdd(d); }
+    });
+
+    const sections = q
+      ? [{ domId:'sec-res', name:'Résultats', count:ALL.filter(match).length + ' plats', dishes:ALL.filter(match).map(decorate) }]
+      : CATS.slice(0, st.shown)
+          .map(c => ({ domId:'sec-'+c.id, name:c.name, count:c.dishes.length + ' plats', dishes:c.dishes.map(decorate) }));
+
+    const cats = CATS.map(c => {
+      const on = c.id === st.active && !q;
+      return { name:c.name, badge:c.badge || '', hasBadge:!!c.badge && upN > 0,
+        bg:on?t.bg:'transparent', fg:on?t.ink:t.mut, fw:on?'800':'600', bar:on?t.acc:'transparent',
+        chipBg:on?t.acc:'transparent', chipFg:on?'#fff':t.mut, chipBc:on?t.acc:t.line,
+        tileBg:on?t.sf:'transparent', tileBc:on?t.acc:t.line, tileFg:on?t.ink:t.mut,
+        tileDot:on?t.acc:t.soft, tileDotFg:on?'#fff':t.mut,
+        onPick:() => {
+          const idx = CATS.findIndex(x => x.id === c.id);
+          this.setState(p => ({ active:c.id, q:'', shown:Math.max(p.shown, idx + 2) }));
+          setTimeout(() => this.scrollTo(c.id), 30);
+          this.centerRail(idx);
+        } };
+    });
+
+    const sheet = st.sheet;
+    const groups = sheet ? (sheet.g || []).map(k => {
+      const g = G[k], s = st.sel[g.id];
+      const req = g.type === 'single' && g.req;
+      return {
+        label:g.label,
+        hint: req ? 'Obligatoire' : (g.type === 'multi' ? 'Jusqu\u2019à ' + g.max : 'Facultatif'),
+        hintColor: req ? t.acc : t.mut, hintBg: t.soft,
+        opts: g.opts.map((o, i) => {
+          const on = g.type === 'single' ? s === i : (s || []).includes(i);
+          return { n:o.n, pLabel:o.p ? '+ ' + eur(o.p) : 'Inclus', pc:o.p ? t.acc : t.mut,
+            bc:on?t.acc:t.line, bg:on?t.soft:'transparent', mc:on?t.acc:t.line, mbg:on?t.acc:'transparent',
+            mark:on?'✓':'', markRadius:g.type==='single'?'50%':'6px',
+            onPick:() => this.setState(p => {
+              const sel = {...p.sel};
+              if (g.type === 'single') sel[g.id] = on && !g.req ? -1 : i;
+              else { const cur = sel[g.id] || []; sel[g.id] = on ? cur.filter(x => x !== i) : (cur.length >= g.max ? cur : [...cur, i]); }
+              return { sel };
+            }) };
+        })
+      };
+    }) : [];
+
+    const addNames = ['Soupe miso','Edamame au sel de Guérande','Thé vert glacé maison 50 cl'];
+    const sheetAdds = addNames.map(byName).filter(Boolean).map(d => ({ n:d.n, priceLabel:eur(d.p), onAdd:() => this.quickAdd(d) }));
+
+    const upNames = upN === 0
+      ? ['Soupe miso','Thé vert glacé maison 50 cl','Mochi glacé (3)']
+      : ['Gyoza au porc (6)','Mochi glacé (3)','Thé vert glacé maison 50 cl','Edamame au sel de Guérande','Ramune litchi','Cheesecake yuzu','Saké chaud 15 cl'];
+    const upsells = upNames.map(byName).filter(Boolean).map(d => ({ n:d.n, priceLabel:eur(d.p), onAdd:() => this.quickAdd(d) }));
+
+    const railSource = (st.railTab === 'Boissons' ? CATS.find(c => c.id === 'boi') : CATS.find(c => c.id === 'des')).dishes.slice(0, 4);
+    const rail = railSource.map(d => ({ n:d.n, priceLabel:eur(d.p), onAdd:() => this.quickAdd(d) }));
+    const railTabs = ['Boissons','Desserts'].map(n => ({ n, bg: st.railTab === n ? t.soft : 'transparent', fg: st.railTab === n ? t.ink : t.mut, onPick:() => this.setState({ railTab:n }) }));
+
+    const slotNames = st.mode === 'deliv' ? ['Au plus vite · 30 min','19:30','20:00','20:30'] : (onSite ? ['Dès que prêt','Après l\u2019apéritif'] : ['Dans 20 min','19:15','19:45','20:15']);
+    const slots = slotNames.map((n, i) => ({ n, bc: st.slot === i ? t.acc : t.line, bg: st.slot === i ? t.soft : 'transparent', fg: st.slot === i ? t.acc : t.mut, onPick:() => this.setState({ slot:i }) }));
+
+    const payNames = onSite
+      ? [['Payer maintenant','Carte bancaire'],['Payer à la fin du repas','Ajouté à l\u2019addition'],['Apple Pay','Face ID']]
+      : [['Carte bancaire','•••• 4218'],['Apple Pay','Face ID'],[st.mode === 'deliv' ? 'Espèces à la livraison' : 'Espèces sur place','Appoint apprécié']];
+    const pays = payNames.map(([n, sub2], i) => ({ n, sub:sub2, bc: st.pay === i ? t.acc : t.line, bg: st.pay === i ? t.soft : 'transparent',
+      mc: st.pay === i ? t.acc : t.line, mbg: st.pay === i ? t.acc : 'transparent', mark: st.pay === i ? '✓' : '', onPick:() => this.setState({ pay:i }) }));
+
+    const stepDefs = st.mode === 'deliv'
+      ? [['Commande confirmée','Le restaurant a reçu votre commande'],['En préparation','Sushi dressés à la minute'],['En route','Votre livreur arrive'],['Livrée','Bon appétit']]
+      : onSite
+        ? [['Envoyée en cuisine','Table ' + st.table],['En préparation','Les plats arrivent au fur et à mesure'],['Premiers plats servis','Entrées et sushi'],['Repas servi','Bon appétit']]
+        : [['Commande confirmée','Le restaurant a reçu votre commande'],['En préparation','Sushi dressés à la minute'],['Prête','À retirer au comptoir'],['Retirée','Bon appétit']];
+    const steps = stepDefs.map(([n, sub2], i) => {
+      const done = i < st.track, cur = i === st.track;
+      return { n, sub:sub2, fg: (done || cur) ? t.ink : t.mut,
+        dotBc: (done || cur) ? t.acc : t.line, dotBg: done ? t.acc : (cur ? t.acc : 'transparent'),
+        anim: cur ? 'nmy-pulse 1.4s ease-in-out infinite' : 'none',
+        lineH: i === stepDefs.length - 1 ? '0px' : '34px', lineBg: done ? t.acc : t.line };
+    });
+
+    const modes = [
+      { k:'L', title:'Livraison', ph:'photo livraison', cta:'Commander en livraison',
+        sub:'Neuilly et communes limitrophes, 25 à 35 minutes. Offerte dès 30 €.',
+        onPick:() => this.setState({ view:'menu', mode:'deliv', slot:0 }) },
+      { k:'E', title:'À emporter', ph:'photo comptoir', cta:'Commander à emporter',
+        sub:'Prêt en quinze minutes, retrait au comptoir. 5 % de remise.',
+        onPick:() => this.setState({ view:'menu', mode:'pickup', slot:0 }) },
+      { k:'T', title:'Sur place', ph:'photo salle', cta:'Commander à table',
+        sub:'Salle et terrasse. Scannez le QR de votre table, la commande part en cuisine.',
+        onPick:() => this.setState({ view:'table' }) }
+    ].map(m => ({ ...m, bc:t.line, bg:t.sf, ic:t.soft, icf:t.acc }));
+
+    const tables = Array.from({length:12}, (_, i) => i + 1).map(n => ({
+      n, bc: st.table === n ? t.acc : t.line, bg: st.table === n ? t.soft : t.sf, fg: st.table === n ? t.acc : t.ink,
+      onPick:() => this.setState({ table:n, view:'menu', mode:'table', slot:0, pay:1 })
+    }));
+
+    const modeLabel = st.mode === 'deliv' ? 'Livraison · 25-35 min' : (onSite ? 'Sur place · table ' + st.table : 'À emporter · prêt en 15 min');
+
+    return {
+      t, isHome: st.view === 'home', isTable: st.view === 'table',
+      isMenuMobile: st.view === 'menu' && !desk, isMenuDesk: st.view === 'menu' && desk,
+      appW: forcedMobile ? '390px' : '100%',
+      appH: forcedMobile ? 'min(844px,100vh)' : '100vh',
+      appMargin: forcedMobile ? '0 auto' : '0',
+      appRadius: forcedMobile ? '28px' : '0px',
+      appShadow: forcedMobile ? '0 24px 60px rgba(23,19,16,.22)' : 'none',
+      isDesk: desk, colW: desk ? '560px' : 'none',
+      homeW: desk ? '1100px' : 'none',
+      homePad: desk ? '26px 32px 34px' : '18px 20px 24px',
+      bodyPad: desk ? '34px 32px 40px' : '22px 18px 30px',
+      heroMin: desk ? '320px' : '250px',
+      modeCols: desk ? 'repeat(3,minmax(0,1fr))' : '1fr',
+      modeImgH: desk ? '150px' : '112px',
+      infoCols: desk ? 'repeat(2,minmax(0,1fr))' : '1fr',
+      hours: [
+        { d:'Lundi au vendredi', h:'12 h – 15 h · 19 h – 23 h' },
+        { d:'Samedi', h:'19 h – 23 h' },
+        { d:'Dimanche', h:'19 h – 23 h' }
+      ],
+      showDeskRail: desk && topNav, showDeskSide: desk && !topNav,
+      deskCols: topNav ? 'minmax(0,1fr) 348px' : '236px minmax(0,1fr) 348px',
+      railRef: el => { if (el) this.railEl = el; },
+      railLeft: () => { if (this.railEl) this.railEl.scrollBy({ left:-400, behavior:'smooth' }); },
+      railRight: () => { if (this.railEl) this.railEl.scrollBy({ left:400, behavior:'smooth' }); },
+      isCart: st.view === 'cart', isPay: st.view === 'pay', isTrack: st.view === 'track',
+      showSidebar: nav === 'Sidebar catégories', showTabs: nav === 'Onglets horizontaux',
+      showTier: upN > 0 && !onSite, showSideRail: upN >= 2, showSheetUpsell: upN >= 1,
+      upsellNote: upN >= 2 ? '+3,40 € de panier moyen' : 'Sélection du chef',
+      modes, tables, modeLabel, q: st.q, hasQ: !!st.q, noResults: !!q && !ALL.some(match),
+      onQ: e => this.setState({ q:e.target.value }), clearQ: () => this.setState({ q:'' }),
+      tierText, tierPct, cats, sections,
+      listRef: el => { if (el) this.listEl = el; },
+      onScroll: e => {
+        const el = e.target;
+        if (el.scrollHeight - el.scrollTop - el.clientHeight < 800 && this.state.shown < CATS.length)
+          this.setState(p => ({ shown: Math.min(CATS.length, p.shown + 2) }));
+        if (this.lock && Date.now() - this.lock < 400) return;
+        const base = el.getBoundingClientRect().top + 8; let cur = CATS[0].id;
+        CATS.forEach(c => { const s = el.querySelector('#sec-' + c.id); if (s && s.getBoundingClientRect().top <= base) cur = c.id; });
+        if (cur !== this.state.active) {
+          this.setState({ active:cur });
+          this.centerRail(CATS.findIndex(c => c.id === cur));
+        }
+      },
+      lines: st.cart.map(l => ({ n:l.n, opts:l.opts, hasOpts:!!l.opts, qty:l.qty, priceLabel:eur(l.unit*l.qty),
+        onPlus:() => this.bump(l.key, 1), onMinus:() => this.bump(l.key, -1) })),
+      cartEmpty: st.cart.length === 0, upsells, rail, railTabs,
+      subtotalLabel: eur(sub), discountLabel: '− ' + eur(discount), hasDiscount: discount > 0,
+      hasPromo: promoOk && sub > 0, promoLabel: '− ' + eur(promoAmt),
+      feeName: st.mode === 'deliv' ? 'Frais de livraison' : (onSite ? 'Service' : 'Frais'),
+      feeLabel: fee === 0 ? 'Offerts' : eur(fee), totalLabel: eur(total), count,
+      promo: st.promo, onPromo: e => this.setState({ promo:e.target.value }),
+      promoState: st.promo ? (promoOk ? 'Appliqué · −10 %' : 'Code inconnu') : '',
+      promoColor: promoOk ? '#1E7A4C' : t.mut,
+      destTitle: st.mode === 'deliv' ? 'Adresse de livraison' : (onSite ? 'Votre table' : 'Retrait au restaurant'),
+      destLine: st.mode === 'deliv' ? '18 rue Oberkampf, 75011 Paris\nInterphone 4B · 3e étage' : (onSite ? 'Table ' + st.table + ' · salle principale' : 'Nomiya · 12 rue de Charonne, 75011 Paris'),
+      slots, pays, steps,
+      trackTitle: ['Commande confirmée','En préparation', st.mode === 'deliv' ? 'En route' : 'Bientôt prête','C\u2019est servi'][st.track],
+      trackSub: st.track >= 3 ? 'Merci d\u2019avoir commandé chez Nomiya.' : (st.mode === 'deliv' ? 'Arrivée estimée à 19 h 42 · Karim, à vélo' : (onSite ? 'La cuisine envoie les plats au fur et à mesure.' : 'Retrait au comptoir dans environ 14 min.')),
+      trackFoot: onSite ? 'L\u2019addition sera présentée en fin de repas.' : 'Un reçu vous a été envoyé par e-mail.',
+      showBar: count > 0 && (st.view === 'pay' || ((st.view === 'menu' || st.view === 'cart') && !desk)),
+      goPay: () => { if (count > 0) this.setState({ view:'pay' }); },
+      payBg: count > 0 ? t.acc : t.soft, payFg: count > 0 ? '#fff' : t.mut,
+      payCursor: count > 0 ? 'pointer' : 'not-allowed',
+      countLabel: count + (count > 1 ? ' articles' : ' article'),
+      payLabel: count > 0 ? 'Commander · ' + eur(total) : 'Ajoutez un plat pour commander',
+      barSub: st.view === 'pay' ? 'Paiement sécurisé' : (st.view === 'cart' ? modeLabel : count + (count > 1 ? ' articles' : ' article')),
+      barCta: st.view === 'pay' ? 'Payer' : (st.view === 'cart' ? 'Commander' : 'Voir le panier'),
+      barAction: () => { if (st.view === 'menu') this.setState({ view:'cart' }); else if (st.view === 'cart') this.setState({ view:'pay' }); else this.startTracking(); },
+      goHome: () => this.setState({ view:'home' }), goMenu: () => this.setState({ view:'menu' }), goCart: () => this.setState({ view:'cart' }),
+      reset: () => { clearInterval(this.timer); this.setState({ view:'home', cart:[], q:'', active:'pop', promo:'', track:0 }); },
+      sheetOpen: !!sheet, sheetName: sheet ? sheet.n : '', sheetDesc: sheet ? sheet.d : '',
+      sheetPh: sheet ? sheet.ph : '', sheetBase: sheet ? eur(sheet.p) : '',
+      sheetTotal: sheet ? eur(this.unit() * st.qty) : '', groups, sheetAdds,
+      sheetTop: desk ? '6vh' : (dishFull ? '0px' : '96px'),
+      sheetBottom: desk ? '6vh' : '0px',
+      sheetW: desk ? '580px' : 'none',
+      sheetRadius: desk ? '20px' : (dishFull ? '0px' : '24px 24px 0 0'),
+      heroH: desk ? '200px' : (dishFull ? '210px' : '150px'),
+      sheetScrim: desk || !dishFull,
+      qty: st.qty, note: st.note, onNote: e => this.setState({ note:e.target.value }),
+      inc: () => this.setState(p => ({ qty:p.qty+1 })), dec: () => this.setState(p => ({ qty:Math.max(1,p.qty-1) })),
+      closeSheet: () => this.setState({ sheet:null }), addToCart: () => { const d = st.sheet; this.push(d.n, this.unit(), st.qty, this.optLabel()); this.setState({ sheet:null }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

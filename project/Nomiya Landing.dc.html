@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FBF8F4;font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#171310}
+a{color:#C5361D;text-decoration:none}a:hover{color:#98230F}
+*{box-sizing:border-box}
+::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+<div style="width:100%;overflow-x:hidden;background:#FBF8F4">
+
+<div style="position:relative;min-height:min(92vh,820px);background:#100E0C;display:flex;flex-direction:column;overflow:hidden">
+  <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#2A2420 0 14px,#211C19 14px 28px)"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,14,12,.72) 0%,rgba(16,14,12,.34) 42%,rgba(16,14,12,.88) 100%)"></div>
+  <span style="position:absolute;bottom:14px;right:16px;font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:rgba(255,255,255,.45);z-index:3">photo pleine page · comptoir à sushi, lumière du soir</span>
+
+  <div style="position:relative;z-index:2;max-width:1180px;width:100%;margin:0 auto;padding:22px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;row-gap:10px">
+    <span style="font-family:'Instrument Serif',Georgia,serif;font-size:27px;line-height:1;color:#fff;flex:none">Nomiya</span>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:flex-end">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="3">
+        <a href="{{ n.href }}" style="font-size:12.5px;font-weight:700;color:rgba(255,255,255,.78);white-space:nowrap">{{ n.n }}</a>
+      </sc-for>
+      <a href="tel:+33146374902" style="border:1.5px solid rgba(255,255,255,.28);color:#fff;font-size:12.5px;font-weight:800;border-radius:999px;padding:10px 17px;white-space:nowrap">Réserver</a>
+    </div>
+  </div>
+
+  <div style="position:relative;z-index:2;flex:1;max-width:1180px;width:100%;margin:0 auto;padding:0 24px 56px;display:flex;flex-direction:column;justify-content:flex-end;gap:22px">
+    <span style="font-size:10.5px;font-weight:800;letter-spacing:2.2px;color:rgba(255,255,255,.62)">NEUILLY-SUR-SEINE · DEPUIS 2009</span>
+    <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(42px,8.4vw,86px);line-height:.98;letter-spacing:-1.5px;color:#fff;max-width:14ch;text-wrap:pretty">Le Japon à deux pas du pont</span>
+    <span style="font-size:clamp(14px,1.5vw,17px);font-weight:500;color:rgba(255,255,255,.78);line-height:1.6;max-width:52ch;text-wrap:pretty">Un comptoir de quartier où le poisson est tranché à la commande, les brochettes passent sur le charbon et l'on vous reconnaît à la deuxième visite.</span>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:6px">
+      <a href="tel:+33146374902" style="background:#C5361D;color:#fff;font-size:14.5px;font-weight:800;border-radius:14px;padding:17px 28px">Réserver une table</a>
+      <a href="Nomiya Commande.dc.html" style="border:1.5px solid rgba(255,255,255,.3);color:#fff;font-size:14.5px;font-weight:800;border-radius:14px;padding:17px 26px">Commander en ligne</a>
+    </div>
+  </div>
+</div>
+
+<div style="background:#171310;color:#fff">
+  <div style="max-width:1180px;margin:0 auto;padding:22px 24px;display:flex;flex-wrap:wrap;gap:26px 44px;align-items:center">
+    <sc-for list="{{ strip }}" as="s" hint-placeholder-count="4">
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <span style="font-size:12.5px;font-weight:800">{{ s.n }}</span>
+        <span style="font-size:11.5px;font-weight:600;color:rgba(255,255,255,.55)">{{ s.d }}</span>
+      </div>
+    </sc-for>
+    <a href="Nomiya Commande.dc.html" style="margin-left:auto;font-size:12.5px;font-weight:800;color:#E8734A;white-space:nowrap">Voir la carte ›</a>
+  </div>
+</div>
+
+<div style="max-width:1180px;margin:0 auto;padding:0 24px">
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:52px;align-items:center;padding:82px 0 72px">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:2px;color:#C5361D">LA MAISON</span>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(30px,4.6vw,46px);line-height:1.06;text-wrap:pretty">Une adresse de quartier, pas une chaîne</span>
+      <span style="font-size:15px;font-weight:500;color:#5B534C;line-height:1.7;text-wrap:pretty">Nomiya tient une petite salle au 211 bis, entre le pont et le métro. Le poisson arrive le matin, la carte suit les saisons, et rien ne part en cuisine avant d'être commandé. On y vient pour un déjeuner de vingt minutes comme pour un dîner qui s'étire.</span>
+      <span style="font-size:15px;font-weight:500;color:#5B534C;line-height:1.7;text-wrap:pretty">Aux beaux jours, quelques tables prennent l'air sur l'avenue. Le reste de l'année, le comptoir reste le meilleur siège de la maison.</span>
+      <a href="#infos" style="font-size:13.5px;font-weight:800;color:#C5361D;margin-top:4px">Horaires et accès ›</a>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div style="border-radius:20px;background:repeating-linear-gradient(135deg,#EFE8DE 0 10px,#E5DCCF 10px 20px);aspect-ratio:3/4;display:flex;align-items:flex-end;padding:12px">
+        <span style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:#8A8078;background:rgba(251,248,244,.9);border-radius:6px;padding:4px 8px">portrait · chef au comptoir</span>
+      </div>
+      <div style="border-radius:20px;background:repeating-linear-gradient(135deg,#EFE8DE 0 10px,#E5DCCF 10px 20px);aspect-ratio:3/4;margin-top:36px;display:flex;align-items:flex-end;padding:12px">
+        <span style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:#8A8078;background:rgba(251,248,244,.9);border-radius:6px;padding:4px 8px">détail · découpe du saumon</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="background:#F3EFE8;padding:76px 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;gap:44px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:10.5px;font-weight:800;letter-spacing:2px;color:#C5361D">LES SIGNATURES</span>
+        <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(30px,4.6vw,46px);line-height:1.06">Trois plats qui résument la maison</span>
+      </div>
+      <a href="Nomiya Commande.dc.html" style="font-size:13.5px;font-weight:800;color:#C5361D;white-space:nowrap">Toute la carte ›</a>
+    </div>
+    <sc-for list="{{ signatures }}" as="s" hint-placeholder-count="3">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center">
+        <div style="border-radius:22px;background:repeating-linear-gradient(135deg,#E7DFD3 0 10px,#DCD2C3 10px 20px);aspect-ratio:4/3;display:flex;align-items:flex-end;padding:14px">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:#7C7367;background:rgba(251,248,244,.9);border-radius:6px;padding:4px 8px">{{ s.ph }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:#A79D93">{{ s.kicker }}</span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(26px,3.4vw,36px);line-height:1.1">{{ s.n }}</span>
+          <span style="font-size:14.5px;font-weight:500;color:#5B534C;line-height:1.7;text-wrap:pretty">{{ s.d }}</span>
+          <span style="font-size:15px;font-weight:800;color:#C5361D;margin-top:2px">{{ s.price }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<div style="max-width:1180px;margin:0 auto;padding:76px 24px 0;display:flex;flex-direction:column;gap:30px">
+  <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
+    <span style="font-size:10.5px;font-weight:800;letter-spacing:2px;color:#C5361D">MIDI OU SOIR</span>
+    <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(30px,4.6vw,46px);line-height:1.06">Deux services, deux ambiances</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+    <sc-for list="{{ services }}" as="sv" hint-placeholder-count="2">
+      <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:22px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="aspect-ratio:16/9;background:repeating-linear-gradient(135deg,#EFE8DE 0 10px,#E5DCCF 10px 20px);display:flex;align-items:flex-end;padding:12px">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:#8A8078;background:rgba(251,248,244,.9);border-radius:6px;padding:4px 8px">{{ sv.ph }}</span>
+        </div>
+        <div style="padding:24px 26px 26px;display:flex;flex-direction:column;gap:11px;flex:1">
+          <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:#A79D93">{{ sv.hours }}</span>
+          <span style="font-family:'Instrument Serif',Georgia,serif;font-size:30px;line-height:1.1">{{ sv.n }}</span>
+          <span style="font-size:14px;font-weight:500;color:#5B534C;line-height:1.65;text-wrap:pretty">{{ sv.d }}</span>
+          <span style="font-size:13px;font-weight:800;color:#171310;margin-top:auto;padding-top:12px">{{ sv.note }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<div style="padding:76px 0 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;gap:26px">
+    <span style="font-size:10.5px;font-weight:800;letter-spacing:2px;color:#C5361D">LA SALLE</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px">
+      <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="4">
+        <div style="border-radius:16px;background:repeating-linear-gradient(135deg,#EFE8DE 0 9px,#E5DCCF 9px 18px);aspect-ratio:{{ g.ratio }};display:flex;align-items:flex-end;padding:11px">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:9px;color:#8A8078;background:rgba(251,248,244,.9);border-radius:5px;padding:3px 7px">{{ g.ph }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+<div style="padding:76px 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px">
+    <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
+      <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:20px;padding:26px 28px;display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:13px;font-weight:800;color:#C5361D;letter-spacing:2px">{{ r.stars }}</span>
+        <span style="font-family:'Instrument Serif',Georgia,serif;font-size:21px;line-height:1.4;color:#171310;text-wrap:pretty">{{ r.t }}</span>
+        <span style="font-size:11.5px;font-weight:700;color:#8A8078;margin-top:auto">{{ r.a }}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<div id="infos" style="background:#171310;color:#fff;padding:76px 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:2px;color:#E8734A">RÉSERVER</span>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(30px,4.6vw,46px);line-height:1.06">Une table vous attend ce soir</span>
+      <span style="font-size:14.5px;font-weight:500;color:rgba(255,255,255,.66);line-height:1.7;max-width:46ch;text-wrap:pretty">Réservation par téléphone, du service du midi jusqu'à la fermeture. Pour un dîner de groupe, prévenez-nous la veille.</span>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:4px">
+        <a href="tel:+33146374902" style="background:#C5361D;color:#fff;font-size:14.5px;font-weight:800;border-radius:14px;padding:17px 26px">01 46 37 49 02</a>
+        <a href="Nomiya Commande.dc.html" style="border:1.5px solid rgba(255,255,255,.28);color:#fff;font-size:14.5px;font-weight:800;border-radius:14px;padding:17px 26px">Commander à emporter</a>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:rgba(255,255,255,.45)">HORAIRES</span>
+        <sc-for list="{{ hours }}" as="h" hint-placeholder-count="3">
+          <div style="display:flex;justify-content:space-between;gap:16px;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:9px">
+            <span style="font-weight:700">{{ h.d }}</span>
+            <span style="font-weight:600;color:rgba(255,255,255,.62);text-align:right">{{ h.h }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:rgba(255,255,255,.45)">ADRESSE</span>
+        <span style="font-size:14.5px;font-weight:700;line-height:1.5">211 bis avenue Charles de Gaulle<br>92200 Neuilly-sur-Seine</span>
+        <span style="font-size:12.5px;font-weight:600;color:rgba(255,255,255,.55);line-height:1.6">Métro Pont de Neuilly, ligne 1 · deux minutes à pied</span>
+        <div style="height:120px;border-radius:14px;background:repeating-linear-gradient(135deg,#2A2521 0 9px,#231F1B 9px 18px);display:flex;align-items:flex-end;padding:11px;margin-top:4px">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.07);border-radius:5px;padding:3px 7px">plan d'accès</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1180px;margin:0 auto;padding:34px 24px 52px;display:flex;justify-content:space-between;gap:26px;flex-wrap:wrap;align-items:flex-end">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span style="font-family:'Instrument Serif',Georgia,serif;font-size:30px;line-height:1">Nomiya</span>
+    <span style="font-size:12.5px;font-weight:600;color:#8A8078;line-height:1.6">Restaurant japonais · Sur place, à emporter, livraison<br>211 bis avenue Charles de Gaulle, 92200 Neuilly-sur-Seine</span>
+  </div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap">
+    <sc-for list="{{ foot }}" as="f" hint-placeholder-count="3">
+      <a href="{{ f.href }}" style="font-size:12.5px;font-weight:700;color:#5B534C">{{ f.n }}</a>
+    </sc-for>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const signatures = [
+      {kicker:'LE PLATEAU',n:'Plateau Nomiya, 18 pièces',d:'Saumon, thon, crevette, avocat et california, dressés au moment. C\u2019est le plat que la salle commande le plus, et celui qu\u2019on conseille pour une première visite.',price:'26,90 €',ph:'photo plateau signature'},
+      {kicker:'LE COMPTOIR',n:'Tartare saumon-avocat',d:'Saumon taillé au couteau, avocat, ciboule et sésame torréfié. Une entrée simple qui dit tout du poisson servi ici.',price:'12,90 €',ph:'photo tartare'},
+      {kicker:'LE CHARBON',n:'Yakitori bœuf au fromage',d:'Bœuf finement roulé, fondant à cœur, passé sur le charbon et laqué à la sauce tare. À prendre par deux, jamais par une.',price:'7,50 €',ph:'photo yakitori sur le grill'}
+    ];
+
+    return {
+      nav: [
+        {n:'La maison',href:'#'},
+        {n:'La carte',href:'Nomiya Commande.dc.html'},
+        {n:'Horaires & accès',href:'#infos'}
+      ],
+      strip: [
+        {n:'Sur place',d:'Salle et terrasse, 32 couverts'},
+        {n:'À emporter',d:'Prêt en quinze minutes'},
+        {n:'Livraison',d:'Neuilly et alentours, 25-35 min'},
+        {n:'Prix moyen',d:'16 € à la carte'}
+      ],
+      signatures,
+      services: [
+        {hours:'12 H – 15 H, DU LUNDI AU VENDREDI',n:'Le déjeuner',d:'Formules servies en vingt minutes : une entrée, un plat, une boisson. La salle tourne vite, on ne vous fait pas attendre.',note:'Formules de 16,90 € à 22,90 €',ph:'photo salle au déjeuner'},
+        {hours:'19 H – 23 H, TOUS LES JOURS',n:'Le dîner',d:'Le comptoir prend son temps : plateaux à partager, brochettes au charbon, saké tiède. Réservation conseillée le week-end.',note:'Réservation au 01 46 37 49 02',ph:'photo comptoir le soir'}
+      ],
+      gallery: [
+        {ph:'photo salle',ratio:'4/5'},
+        {ph:'photo comptoir',ratio:'4/5'},
+        {ph:'photo terrasse',ratio:'4/5'},
+        {ph:'photo détail table',ratio:'4/5'}
+      ],
+      reviews: [
+        {stars:'★★★★★',t:'Une carte originale et variée, un service sympathique. Très bons plats.',a:'Avis client'},
+        {stars:'★★★★★',t:'Un bon restaurant japonais les yeux fermés. Excellente cuisine.',a:'Avis client'},
+        {stars:'★★★★☆',t:'Les plats sont copieux et le service rapide. Un bon japonais de quartier.',a:'Avis client'}
+      ],
+      hours: [
+        {d:'Lundi au vendredi',h:'12 h – 15 h · 19 h – 23 h'},
+        {d:'Samedi',h:'19 h – 23 h'},
+        {d:'Dimanche',h:'19 h – 23 h'}
+      ],
+      foot: [
+        {n:'La carte',href:'Nomiya Commande.dc.html'},
+        {n:'Réserver',href:'tel:+33146374902'},
+        {n:'Horaires & accès',href:'#infos'},
+        {n:'Mentions légales',href:'#'}
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

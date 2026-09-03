@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FBF8F4;font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#171310}
+a{color:#C5361D;text-decoration:none}a:hover{color:#98230F}
+*{box-sizing:border-box}
+::-webkit-scrollbar{width:0;height:0}
+input,textarea{font-family:inherit}
+</style>
+</helmet>
+<div style="width:100%;min-height:100vh;overflow-x:hidden;background:#FBF8F4;padding-bottom:{{ pagePad }}">
+
+<div style="position:relative;background:#100E0C;overflow:hidden">
+  <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,#2A2420 0 14px,#211C19 14px 28px)"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,14,12,.6) 0%,rgba(16,14,12,.32) 40%,rgba(16,14,12,.92) 100%)"></div>
+  <span style="position:absolute;bottom:9px;right:14px;font-family:ui-monospace,Menlo,monospace;font-size:8.5px;color:rgba(255,255,255,.4);z-index:3">photo salle · service du soir</span>
+  <div style="position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:22px 24px 34px;display:flex;flex-direction:column;gap:13px;min-height:{{ heroMin }};justify-content:flex-end">
+    <a href="Nomiya Landing.dc.html" style="align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.6px;color:rgba(255,255,255,.6)">‹ RETOUR AU SITE</a>
+    <span style="font-size:10.5px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.55)">RÉSERVER UNE TABLE</span>
+    <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(32px,5.6vw,52px);line-height:1;letter-spacing:-1px;color:#fff">Nomiya</span>
+    <span style="font-size:12.5px;font-weight:700;letter-spacing:.4px;color:rgba(255,255,255,.62)">211 BIS AV. CHARLES DE GAULLE · NEUILLY-SUR-SEINE</span>
+  </div>
+</div>
+
+<sc-if value="{{ isForm }}">
+<div style="max-width:1100px;margin:0 auto;padding:30px 24px 0;display:grid;grid-template-columns:{{ cols }};gap:22px;align-items:start">
+
+  <div style="display:flex;flex-direction:column;gap:14px">
+
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:13px">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:#8A8078">01 — COMBIEN ÊTES-VOUS ?</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="8">
+          <button onClick="{{ s.onPick }}" style="border:1.5px solid {{ s.bc }};background:{{ s.bg }};color:{{ s.fg }};cursor:pointer;font-family:inherit;font-size:14px;font-weight:800;border-radius:12px;min-width:48px;height:46px;padding:0 14px">{{ s.n }}</button>
+        </sc-for>
+      </div>
+      <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">Au-delà de {{ maxSeatsLabel }} couverts, appelez la salle au 01 46 37 49 02 : nous réunissons les tables du fond.</span>
+    </div>
+
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:13px">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:#8A8078">02 — QUEL JOUR ?</span>
+      <div style="display:flex;gap:9px;overflow-x:auto;padding-bottom:2px">
+        <sc-for list="{{ days }}" as="d" hint-placeholder-count="7">
+          <button onClick="{{ d.onPick }}" style="flex:none;border:1.5px solid {{ d.bc }};background:{{ d.bg }};cursor:pointer;font-family:inherit;border-radius:14px;width:74px;padding:11px 0 12px;display:flex;flex-direction:column;align-items:center;gap:3px">
+            <span style="font-size:10px;font-weight:800;letter-spacing:.6px;color:{{ d.mut }}">{{ d.dow }}</span>
+            <span style="font-size:19px;font-weight:800;color:{{ d.fg }};line-height:1.1">{{ d.num }}</span>
+            <span style="font-size:9.5px;font-weight:700;color:{{ d.mut }}">{{ d.mon }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:#8A8078">03 — À QUELLE HEURE ?</span>
+      <sc-for list="{{ services }}" as="sv" hint-placeholder-count="2">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="display:flex;align-items:baseline;gap:9px">
+            <span style="font-size:13.5px;font-weight:800">{{ sv.n }}</span>
+            <span style="font-size:11px;font-weight:700;color:#A79D93">{{ sv.range }}</span>
+          </div>
+          <sc-if value="{{ sv.closed }}">
+            <span style="font-size:12px;font-weight:600;color:#8A8078;background:#F3EFE8;border-radius:10px;padding:11px 13px">{{ sv.closedText }}</span>
+          </sc-if>
+          <sc-if value="{{ sv.open }}">
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ sv.slots }}" as="sl" hint-placeholder-count="6">
+                <button onClick="{{ sl.onPick }}" disabled="{{ sl.full }}" style="border:1.5px solid {{ sl.bc }};background:{{ sl.bg }};color:{{ sl.fg }};cursor:{{ sl.cursor }};font-family:inherit;font-size:13.5px;font-weight:800;border-radius:11px;height:44px;padding:0 16px;text-decoration:{{ sl.deco }}">{{ sl.n }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+      <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.5">La table reste tenue quinze minutes après l'heure réservée.</span>
+    </div>
+
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:13px">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:#8A8078">04 — OÙ VOUS INSTALLER ?</span>
+      <div style="display:grid;grid-template-columns:{{ zoneCols }};gap:10px">
+        <sc-for list="{{ zones }}" as="z" hint-placeholder-count="3">
+          <button onClick="{{ z.onPick }}" style="border:1.5px solid {{ z.bc }};background:{{ z.bg }};cursor:pointer;font-family:inherit;border-radius:14px;padding:13px 15px;display:flex;flex-direction:column;gap:4px;text-align:left">
+            <span style="font-size:13.5px;font-weight:800;color:#171310">{{ z.n }}</span>
+            <span style="font-size:11.5px;font-weight:600;color:#8A8078;line-height:1.45">{{ z.d }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:#8A8078">05 — VOS COORDONNÉES</span>
+      <div style="display:grid;grid-template-columns:{{ fieldCols }};gap:10px">
+        <sc-for list="{{ fields }}" as="f" hint-placeholder-count="4">
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:11.5px;font-weight:800;color:#5B534C">{{ f.label }}</span>
+            <input value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" style="border:1.5px solid {{ f.bc }};background:#FBF8F4;border-radius:12px;padding:13px 14px;font-size:13.5px;font-weight:600;color:#171310;outline:none;width:100%" />
+          </label>
+        </sc-for>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:11.5px;font-weight:800;color:#5B534C">Une précision pour la salle</span>
+        <input value="{{ note }}" onChange="{{ onNote }}" placeholder="Anniversaire, allergie, poussette, table calme…" style="border:1.5px solid rgba(23,19,16,.12);background:#FBF8F4;border-radius:12px;padding:13px 14px;font-size:13.5px;font-weight:600;color:#171310;outline:none;width:100%" />
+      </label>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ occasions }}" as="o" hint-placeholder-count="0">
+          <button onClick="{{ o.onPick }}" style="border:1.5px solid {{ o.bc }};background:{{ o.bg }};color:{{ o.fg }};cursor:pointer;font-family:inherit;font-size:12px;font-weight:700;border-radius:999px;padding:9px 14px">{{ o.n }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:{{ recapPos }};top:24px;display:flex;flex-direction:column;gap:12px">
+    <div style="background:#171310;border-radius:20px;padding:22px 24px;display:flex;flex-direction:column;gap:16px;color:#fff">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:rgba(255,255,255,.45)">VOTRE RÉSERVATION</span>
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:28px;line-height:1.15">{{ recapTitle }}</span>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ recap }}" as="r" hint-placeholder-count="4">
+          <div style="display:flex;justify-content:space-between;gap:14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:9px">
+            <span style="font-weight:600;color:rgba(255,255,255,.55)">{{ r.k }}</span>
+            <span style="font-weight:800;text-align:right">{{ r.v }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <button onClick="{{ submit }}" disabled="{{ notReady }}" style="border:0;cursor:{{ ctaCursor }};font-family:inherit;background:{{ ctaBg }};color:{{ ctaFg }};border-radius:14px;height:52px;font-size:14.5px;font-weight:800;width:100%">{{ ctaLabel }}</button>
+      <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,.45);line-height:1.5">Confirmation immédiate par SMS. Annulation libre jusqu'à deux heures avant.</span>
+    </div>
+    <div style="border:1px solid rgba(23,19,16,.09);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:10.5px;font-weight:800;letter-spacing:1.6px;color:#8A8078">COMPLET SUR VOTRE CRÉNEAU ?</span>
+      <span style="font-size:12.5px;font-weight:600;color:#8A8078;line-height:1.55">Le comptoir accepte les sans-réservation, ou commandez à emporter et récupérez en quinze minutes.</span>
+      <a href="Nomiya Commande.dc.html" style="font-size:13px;font-weight:800;color:#C5361D">Commander à emporter ›</a>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDone }}">
+<div style="max-width:640px;margin:0 auto;padding:44px 24px 0;display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+  <span style="width:52px;height:52px;border-radius:50%;background:#1E7A4C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px">✓</span>
+  <span style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(30px,5vw,42px);line-height:1.08">Table réservée, {{ firstName }}</span>
+  <span style="font-size:14.5px;font-weight:500;color:#5B534C;line-height:1.65">{{ doneLine }}</span>
+  <div style="width:100%;background:#fff;border:1px solid rgba(23,19,16,.08);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ recap }}" as="r" hint-placeholder-count="4">
+      <div style="display:flex;justify-content:space-between;gap:14px;font-size:13.5px;border-bottom:1px solid rgba(23,19,16,.06);padding-bottom:9px">
+        <span style="font-weight:600;color:#8A8078">{{ r.k }}</span>
+        <span style="font-weight:800;text-align:right">{{ r.v }}</span>
+      </div>
+    </sc-for>
+    <span style="font-size:12px;font-weight:600;color:#8A8078;line-height:1.55;margin-top:2px">Référence {{ ref }} · un SMS de confirmation vient de partir.</span>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px">
+    <a href="Nomiya Commande.dc.html" style="background:#C5361D;color:#fff;font-size:14px;font-weight:800;border-radius:14px;padding:15px 22px">Voir la carte</a>
+    <button onClick="{{ reset }}" style="border:1.5px solid rgba(23,19,16,.14);background:transparent;color:#171310;font-family:inherit;font-size:14px;font-weight:800;border-radius:14px;padding:15px 22px;cursor:pointer">Modifier la réservation</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showBar }}">
+<div style="position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 16px 20px;background:linear-gradient(180deg,rgba(251,248,244,0) 0%,#FBF8F4 32%)">
+  <button onClick="{{ submit }}" disabled="{{ notReady }}" style="width:100%;border:0;cursor:{{ ctaCursor }};font-family:inherit;background:{{ barBg }};color:{{ barFg }};border-radius:16px;height:56px;padding:0 18px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(23,19,16,.2)">
+    <span style="display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:0">
+      <span style="font-size:14.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ barTitle }}</span>
+      <span style="font-size:10.5px;font-weight:600;opacity:.7">{{ barSub }}</span>
+    </span>
+    <span style="margin-left:auto;font-size:13.5px;font-weight:800;white-space:nowrap">{{ barCta }}</span>
+  </button>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900},&quot;maxCouverts&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:8,&quot;min&quot;:4,&quot;max&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Réglages restaurateur&quot;},&quot;afficherOccasions&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Réglages restaurateur&quot;},&quot;comptoirDisponible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Réglages restaurateur&quot;}}">
+const DOW = ['dim','lun','mar','mer','jeu','ven','sam'];
+const MON = ['janv','févr','mars','avr','mai','juin','juil','août','sept','oct','nov','déc'];
+const LUNCH = ['12:00','12:15','12:30','12:45','13:00','13:15','13:30','14:00'];
+const DINNER = ['19:00','19:15','19:30','19:45','20:00','20:15','20:30','21:00','21:30','22:00'];
+const FULL = ['20:00','13:00','21:00'];
+
+class Component extends DCLogic {
+  state = { size:2, day:0, slot:'20:00', zone:'salle', name:'', phone:'', email:'', note:'', occasion:'', view:'form', w: typeof window !== 'undefined' ? window.innerWidth : 390 };
+
+  componentDidMount() {
+    this.onR = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this.onR);
+    this.onR();
+  }
+
+  componentWillUnmount() { window.removeEventListener('resize', this.onR); }
+
+  dayList() {
+    const out = [];
+    for (let i = 0; i < 10; i++) {
+      const d = new Date(2026, 7, 28 + i);
+      out.push({ i, date:d, dow:DOW[d.getDay()], num:d.getDate(), mon:MON[d.getMonth()], weekend:d.getDay() === 0 || d.getDay() === 6 });
+    }
+    return out;
+  }
+
+  renderVals() {
+    const st = this.state, P = this.props;
+    const desk = st.w >= 900;
+    const maxSeats = Math.max(4, P.maxCouverts || 8);
+    const showOcc = P.afficherOccasions !== false;
+    const comptoir = P.comptoirDisponible !== false;
+    const A = '#C5361D', SOFT = '#FDEDE9', LINE = 'rgba(23,19,16,.12)';
+    const days = this.dayList();
+    const day = days[st.day];
+    const noLunch = day.weekend;
+
+    const isFull = (n, size) => FULL.includes(n) && size >= 4;
+    const mkSlots = list => list.map(n => {
+      const full = isFull(n, st.size);
+      const on = st.slot === n;
+      return { n, full,
+        bc: on ? A : LINE, bg: on ? SOFT : 'transparent',
+        fg: full ? '#BDB4AA' : (on ? A : '#171310'),
+        cursor: full ? 'not-allowed' : 'pointer',
+        deco: full ? 'line-through' : 'none',
+        onPick: () => { if (!full) this.setState({ slot:n }); } };
+    });
+
+    const services = [
+      { n:'Déjeuner', range:'12 h – 15 h', open:!noLunch, closed:noLunch,
+        closedText:'Fermé le midi le week-end.', slots: mkSlots(LUNCH) },
+      { n:'Dîner', range:'19 h – 23 h', open:true, closed:false, slots: mkSlots(DINNER) }
+    ];
+
+    const zoneDefs = [
+      { id:'salle', n:'En salle', d:'La grande table ou les banquettes.' },
+      { id:'comptoir', n:'Au comptoir', d:'Face au chef, deux places maximum.' },
+      { id:'terrasse', n:'En terrasse', d:'Selon la météo, quelques tables sur l\u2019avenue.' }
+    ].filter(z => comptoir || z.id !== 'comptoir');
+    const zones = zoneDefs.map(z => ({ ...z, bc: st.zone === z.id ? A : LINE, bg: st.zone === z.id ? SOFT : 'transparent',
+      onPick:() => this.setState({ zone:z.id }) }));
+    const zoneLabel = (zoneDefs.find(z => z.id === st.zone) || zoneDefs[0]).n;
+
+    const fields = [
+      { key:'name', label:'Nom', ph:'Camille Roussel' },
+      { key:'phone', label:'Téléphone', ph:'06 12 34 56 78' },
+      { key:'email', label:'E-mail (facultatif)', ph:'camille@exemple.fr' }
+    ].map(f => ({ ...f, value: st[f.key],
+      bc: f.key !== 'email' && !st[f.key] ? LINE : (st[f.key] ? A : LINE),
+      onChange: e => this.setState({ [f.key]: e.target.value }) }));
+
+    const occasions = (showOcc ? ['Anniversaire','Dîner d\u2019affaires','En amoureux','Avec des enfants'] : []).map(n => ({
+      n, bc: st.occasion === n ? A : LINE, bg: st.occasion === n ? SOFT : 'transparent',
+      fg: st.occasion === n ? A : '#5B534C',
+      onPick:() => this.setState({ occasion: st.occasion === n ? '' : n })
+    }));
+
+    const dateLabel = day.dow.charAt(0).toUpperCase() + day.dow.slice(1) + ' ' + day.num + ' ' + day.mon;
+    const slotOk = !!st.slot && !isFull(st.slot, st.size) && !(noLunch && LUNCH.includes(st.slot));
+    const ready = slotOk && !!st.name.trim() && st.phone.replace(/\D/g, '').length >= 8;
+    const recap = [
+      { k:'Couverts', v: st.size + (st.size > 1 ? ' personnes' : ' personne') },
+      { k:'Date', v: dateLabel },
+      { k:'Heure', v: slotOk ? st.slot : 'à choisir' },
+      { k:'Table', v: zoneLabel },
+      { k:'Au nom de', v: st.name.trim() || '—' }
+    ];
+    if (st.occasion) recap.push({ k:'Occasion', v: st.occasion });
+
+    return {
+      isForm: st.view === 'form', isDone: st.view === 'done',
+      cols: desk ? 'minmax(0,1fr) 340px' : '1fr',
+      zoneCols: desk ? 'repeat(3,minmax(0,1fr))' : '1fr',
+      fieldCols: desk ? 'repeat(2,minmax(0,1fr))' : '1fr',
+      recapPos: desk ? 'sticky' : 'static',
+      heroMin: desk ? '260px' : '210px',
+      pagePad: desk ? '48px' : (st.view === 'form' ? '104px' : '48px'),
+      showOcc, maxSeatsLabel: maxSeats,
+      sizes: Array.from({length:maxSeats}, (_, i) => i + 1).map(n => ({ n,
+        bc: st.size === n ? A : LINE, bg: st.size === n ? SOFT : '#fff', fg: st.size === n ? A : '#171310',
+        onPick:() => this.setState(p => {
+          if (!p.slot || !isFull(p.slot, n)) return { size:n };
+          const pool = (days[p.day].weekend ? DINNER : LUNCH.concat(DINNER));
+          return { size:n, slot: pool.find(s => !isFull(s, n)) || '' };
+        }) })),
+      days: days.map(d => ({ dow:d.dow.toUpperCase(), num:d.num, mon:d.mon,
+        bc: st.day === d.i ? A : LINE, bg: st.day === d.i ? SOFT : '#fff',
+        fg: st.day === d.i ? A : '#171310', mut: st.day === d.i ? A : '#8A8078',
+        onPick:() => this.setState(p => ({ day:d.i,
+          slot: d.weekend && LUNCH.includes(p.slot) ? (DINNER.find(s => !isFull(s, p.size)) || '') : p.slot })) })),
+      services, zones, fields, occasions,
+      note: st.note, onNote: e => this.setState({ note:e.target.value }),
+      recap,
+      recapTitle: st.size + ' couverts, ' + dateLabel.toLowerCase() + (slotOk ? ' à ' + st.slot : ''),
+      notReady: !ready,
+      ctaBg: ready ? A : 'rgba(255,255,255,.12)', ctaFg: ready ? '#fff' : 'rgba(255,255,255,.45)',
+      ctaCursor: ready ? 'pointer' : 'not-allowed',
+      ctaLabel: !slotOk ? 'Choisissez un créneau disponible' : (ready ? 'Confirmer la réservation' : 'Nom et téléphone requis'),
+      showBar: !desk && st.view === 'form',
+      barBg: ready ? '#171310' : '#EDE7DE', barFg: ready ? '#fff' : '#A79D93',
+      barTitle: st.size + ' couverts · ' + dateLabel + (slotOk ? ' · ' + st.slot : ''),
+      barSub: ready ? zoneLabel : (!slotOk ? 'Choisissez un créneau disponible' : 'Renseignez nom et téléphone'),
+      barCta: ready ? 'Confirmer' : 'Incomplet',
+      submit: () => { if (ready) this.setState({ view:'done' }); },
+      reset: () => this.setState({ view:'form' }),
+      firstName: st.name.trim().split(' ')[0] || '',
+      doneLine: 'Nous vous attendons ' + dateLabel.toLowerCase() + ' à ' + st.slot + ', ' + zoneLabel.toLowerCase() + ', pour ' + st.size + (st.size > 1 ? ' personnes' : ' personne') + '.',
+      ref: 'NMY-' + (4200 + st.day * 7 + st.size)
+    };
+  }
+}
+</script>
+</body>
+</html>

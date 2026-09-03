@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E7E2DA;font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#C5361D}a:hover{color:#98230F}
+*{box-sizing:border-box}
+::-webkit-scrollbar{width:0;height:0}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px 48px;background:#E7E2DA">
+<div style="width:390px;height:844px;position:relative;border-radius:44px;background:#111;padding:10px;box-shadow:0 30px 70px rgba(23,19,16,.28)">
+<div style="width:100%;height:100%;border-radius:35px;overflow:hidden;position:relative;background:#FBF8F4;display:flex;flex-direction:column">
+
+<div style="height:46px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;background:#FFFFFF;font-size:13px;font-weight:700;color:#171310;letter-spacing:.2px">
+<span>9:41</span>
+<span style="display:flex;gap:5px;align-items:center;opacity:.85"><span style="width:16px;height:9px;border-radius:2px;background:#171310;display:inline-block"></span><span style="width:20px;height:9px;border:1.5px solid #171310;border-radius:3px;display:inline-block"></span></span>
+</div>
+
+<sc-if value="{{ isMenu }}" hint-placeholder-val="{{ true }}">
+<div style="flex:none;background:#FFFFFF;padding:6px 16px 12px;border-bottom:1px solid rgba(23,19,16,.07)">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div style="display:flex;flex-direction:column;gap:1px;min-width:0">
+      <span style="font-family:'Instrument Serif',Georgia,serif;font-size:24px;line-height:1.1;color:#171310">Ryū Wok</span>
+      <span style="font-size:11px;color:#8A8078;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Japonais · Chinois · 4,8 ★ (1 204) · 25-35 min</span>
+    </div>
+    <div style="display:flex;background:#F3EFE8;border-radius:999px;padding:3px;flex:none">
+      <button onClick="{{ setDelivery }}" style="border:0;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:700;padding:7px 11px;border-radius:999px;background:{{ delivBg }};color:{{ delivFg }}">Livraison</button>
+      <button onClick="{{ setPickup }}" style="border:0;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:700;padding:7px 11px;border-radius:999px;background:{{ pickBg }};color:{{ pickFg }}">Emporter</button>
+    </div>
+  </div>
+  <div style="margin-top:10px;display:flex;align-items:center;gap:8px;background:#F5F1EA;border-radius:12px;padding:0 12px;height:38px">
+    <span style="width:14px;height:14px;border:2px solid #8A8078;border-radius:50%;flex:none"></span>
+    <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Rechercher un plat, un ingrédient…" style="flex:1;border:0;background:transparent;outline:none;font-size:13.5px;font-weight:500;color:#171310;min-width:0">
+    <sc-if value="{{ hasQ }}"><button onClick="{{ clearQ }}" style="border:0;background:#E4DED4;color:#5B534C;width:20px;height:20px;border-radius:50%;font-size:12px;line-height:1;cursor:pointer;flex:none">×</button></sc-if>
+  </div>
+</div>
+
+<div style="flex:none;background:#FFF7EC;border-bottom:1px solid rgba(224,164,34,.28);padding:9px 16px 10px;display:flex;flex-direction:column;gap:6px">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+    <span style="font-size:12px;font-weight:700;color:#8A5B06">{{ tierText }}</span>
+    <span style="font-size:10.5px;font-weight:700;color:#B8912F;letter-spacing:.3px">PALIERS</span>
+  </div>
+  <div style="height:5px;border-radius:99px;background:#EFE0C4;overflow:hidden"><div style="height:100%;border-radius:99px;background:#E0A422;width:{{ tierPct }}"></div></div>
+</div>
+
+<div style="flex:1;min-height:0;display:flex">
+  <div style="width:96px;flex:none;overflow-y:auto;background:#F5F1EA;border-right:1px solid rgba(23,19,16,.06);padding-bottom:80px">
+    <sc-for list="{{ cats }}" as="c" hint-placeholder-count="9">
+      <button onClick="{{ c.onPick }}" style="width:100%;border:0;cursor:pointer;font-family:inherit;text-align:left;padding:13px 8px 13px 12px;background:{{ c.bg }};color:{{ c.fg }};font-size:12px;font-weight:{{ c.fw }};line-height:1.25;position:relative;display:flex;flex-direction:column;gap:3px">
+        <span style="position:absolute;left:0;top:11px;bottom:11px;width:3px;border-radius:0 3px 3px 0;background:{{ c.bar }}"></span>
+        <span>{{ c.name }}</span>
+        <sc-if value="{{ c.hasBadge }}"><span style="align-self:flex-start;font-size:9px;font-weight:800;letter-spacing:.3px;color:#FFFFFF;background:#C5361D;border-radius:4px;padding:2px 4px">{{ c.badge }}</span></sc-if>
+      </button>
+    </sc-for>
+  </div>
+
+  <div ref="{{ listRef }}" onScroll="{{ onScroll }}" style="flex:1;min-width:0;overflow-y:auto;background:#FBF8F4;padding-bottom:96px">
+    <sc-for list="{{ sections }}" as="s" hint-placeholder-count="3">
+      <div id="{{ s.domId }}" style="scroll-margin-top:0">
+        <div style="padding:14px 14px 8px;display:flex;align-items:baseline;gap:8px;background:#FBF8F4">
+          <span style="font-size:14.5px;font-weight:800;color:#171310">{{ s.name }}</span>
+          <span style="font-size:11px;font-weight:600;color:#A79D93">{{ s.count }}</span>
+        </div>
+        <sc-for list="{{ s.dishes }}" as="d" hint-placeholder-count="4">
+          <div onClick="{{ d.onOpen }}" style="display:flex;gap:11px;padding:12px 14px 14px;background:#FBF8F4;border-bottom:1px solid rgba(23,19,16,.05);cursor:pointer;align-items:flex-start">
+            <div style="width:84px;height:84px;flex:none;border-radius:13px;overflow:hidden;background:repeating-linear-gradient(135deg,#EFE8DE 0 7px,#E5DCCF 7px 14px);display:flex;align-items:flex-end;padding:5px;position:relative">
+              <span style="font-family:ui-monospace,Menlo,monospace;font-size:7.5px;color:#8A8078;background:rgba(251,248,244,.85);border-radius:4px;padding:2px 4px;letter-spacing:-.2px">{{ d.ph }}</span>
+              <sc-if value="{{ d.hasBadge }}"><span style="position:absolute;top:0;left:0;background:#C5361D;color:#fff;font-size:8.5px;font-weight:800;padding:3px 5px;border-bottom-right-radius:8px;letter-spacing:.2px">{{ d.badge }}</span></sc-if>
+            </div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:14.5px;font-weight:700;color:#171310;line-height:1.25">{{ d.n }}</span>
+              <span style="font-size:11.5px;color:#8A8078;font-weight:500;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ d.d }}</span>
+              <span style="font-size:10.5px;color:#A79D93;font-weight:600">{{ d.sold }}</span>
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:2px">
+                <span style="font-size:16px;font-weight:800;color:#C5361D;letter-spacing:-.3px;white-space:nowrap;flex:none">{{ d.priceLabel }}</span>
+                <button onClick="{{ d.onOpen }}" style="border:0;cursor:pointer;font-family:inherit;background:{{ d.btnBg }};color:{{ d.btnFg }};font-size:12px;font-weight:800;border-radius:999px;padding:0 12px;height:28px;min-width:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(197,54,29,.25)">{{ d.btnLabel }}</button>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+    <sc-if value="{{ noResults }}"><div style="padding:60px 24px;text-align:center;font-size:13px;color:#8A8078;font-weight:600">Aucun plat pour « {{ q }} »</div></sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCart }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;background:#FBF8F4">
+  <div style="flex:none;background:#FFFFFF;padding:8px 14px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(23,19,16,.07)">
+    <button onClick="{{ goMenu }}" style="border:0;background:#F3EFE8;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;color:#171310;flex:none">‹</button>
+    <span style="font-size:16px;font-weight:800;color:#171310">Mon panier</span>
+    <span style="margin-left:auto;font-size:11.5px;font-weight:700;color:#8A8078">{{ modeLabel }}</span>
+  </div>
+  <div style="flex:1;min-height:0;overflow-y:auto;padding-bottom:100px">
+    <div style="background:#FFF7EC;padding:10px 16px 12px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid rgba(224,164,34,.28)">
+      <span style="font-size:12px;font-weight:700;color:#8A5B06">{{ tierText }}</span>
+      <div style="height:5px;border-radius:99px;background:#EFE0C4;overflow:hidden"><div style="height:100%;border-radius:99px;background:#E0A422;width:{{ tierPct }}"></div></div>
+    </div>
+    <sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+      <div style="display:flex;gap:11px;padding:13px 14px;background:#FBF8F4;border-bottom:1px solid rgba(23,19,16,.05);align-items:flex-start">
+        <div style="width:56px;height:56px;flex:none;border-radius:11px;background:repeating-linear-gradient(135deg,#EFE8DE 0 7px,#E5DCCF 7px 14px)"></div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:13.5px;font-weight:700;color:#171310;line-height:1.25">{{ l.n }}</span>
+          <sc-if value="{{ l.hasOpts }}"><span style="font-size:11px;color:#8A8078;font-weight:500;line-height:1.35">{{ l.opts }}</span></sc-if>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">
+            <span style="font-size:14.5px;font-weight:800;color:#171310">{{ l.priceLabel }}</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <button onClick="{{ l.onMinus }}" style="border:1px solid rgba(23,19,16,.15);background:#FBF8F4;color:#171310;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1">−</button>
+              <span style="font-size:13px;font-weight:800;color:#171310;min-width:14px;text-align:center">{{ l.qty }}</span>
+              <button onClick="{{ l.onPlus }}" style="border:0;background:#C5361D;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ cartEmpty }}"><div style="padding:70px 30px;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center"><span style="font-size:13.5px;color:#8A8078;font-weight:600">Votre panier est vide</span><button onClick="{{ goMenu }}" style="border:0;background:#C5361D;color:#fff;font-family:inherit;font-size:13px;font-weight:700;padding:11px 18px;border-radius:999px;cursor:pointer">Voir la carte</button></div></sc-if>
+
+    <div style="padding:18px 14px 8px;display:flex;align-items:baseline;gap:8px">
+      <span style="font-size:14.5px;font-weight:800;color:#171310">Souvent commandé avec</span>
+      <span style="font-size:11px;font-weight:600;color:#A79D93">+3 € en moyenne</span>
+    </div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding:2px 14px 16px">
+      <sc-for list="{{ upsells }}" as="u" hint-placeholder-count="4">
+        <div style="width:124px;flex:none;background:#FFFFFF;border:1px solid rgba(23,19,16,.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="height:76px;background:repeating-linear-gradient(135deg,#EFE8DE 0 7px,#E5DCCF 7px 14px)"></div>
+          <div style="padding:8px 9px 10px;display:flex;flex-direction:column;gap:5px">
+            <span style="font-size:12px;font-weight:700;color:#171310;line-height:1.2;height:29px;overflow:hidden">{{ u.n }}</span>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:13px;font-weight:800;color:#C5361D">{{ u.priceLabel }}</span>
+              <button onClick="{{ u.onAdd }}" style="border:0;background:#C5361D;color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1">+</button>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin:4px 14px 24px;background:#FFFFFF;border:1px solid rgba(23,19,16,.07);border-radius:16px;padding:14px 15px;display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#5B534C"><span>Sous-total</span><span>{{ subtotalLabel }}</span></div>
+      <sc-if value="{{ hasDiscount }}"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#1E7A4C"><span>Remise palier 40 €</span><span>{{ discountLabel }}</span></div></sc-if>
+      <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#5B534C"><span>Frais de livraison</span><span>{{ feeLabel }}</span></div>
+      <div style="height:1px;background:rgba(23,19,16,.08)"></div>
+      <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:800;color:#171310"><span>Total</span><span>{{ totalLabel }}</span></div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDone }}">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:40px 32px;background:#FBF8F4;text-align:center">
+  <div style="width:64px;height:64px;border-radius:50%;background:#1E7A4C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px">✓</div>
+  <span style="font-family:'Instrument Serif',Georgia,serif;font-size:28px;color:#171310;line-height:1.15">Commande envoyée</span>
+  <span style="font-size:13px;color:#8A8078;font-weight:500;line-height:1.5">Commande #4821 · {{ totalLabel }}<br>Le restaurant prépare vos plats. Livraison estimée dans 28 min.</span>
+  <button onClick="{{ reset }}" style="border:0;background:#171310;color:#fff;font-family:inherit;font-size:13.5px;font-weight:700;padding:13px 22px;border-radius:999px;cursor:pointer">Nouvelle commande</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ showBar }}">
+<div style="position:absolute;left:0;right:0;bottom:0;padding:12px 14px 22px;background:linear-gradient(180deg,rgba(251,248,244,0) 0%,#FBF8F4 32%)">
+  <button onClick="{{ barAction }}" style="width:100%;border:0;cursor:pointer;font-family:inherit;background:#171310;color:#FFFFFF;border-radius:16px;height:56px;padding:0 16px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(23,19,16,.22)">
+    <span style="width:34px;height:34px;border-radius:10px;background:#C5361D;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex:none">{{ count }}</span>
+    <span style="display:flex;flex-direction:column;align-items:flex-start;gap:1px">
+      <span style="font-size:16px;font-weight:800;letter-spacing:-.2px">{{ totalLabel }}</span>
+      <span style="font-size:10.5px;font-weight:600;opacity:.6">{{ barSub }}</span>
+    </span>
+    <span style="margin-left:auto;font-size:13.5px;font-weight:800;background:#C5361D;border-radius:12px;padding:10px 16px">{{ barCta }}</span>
+  </button>
+</div>
+</sc-if>
+
+<sc-if value="{{ sheetOpen }}">
+<div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(23,19,16,.45);z-index:5"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;top:96px;z-index:6;background:#FFFFFF;border-radius:24px 24px 0 0;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 -10px 40px rgba(23,19,16,.2)">
+  <div style="flex:none;position:relative;height:150px;background:repeating-linear-gradient(135deg,#EFE8DE 0 8px,#E5DCCF 8px 16px);display:flex;align-items:flex-end;padding:10px">
+    <span style="font-family:ui-monospace,Menlo,monospace;font-size:9px;color:#8A8078;background:rgba(255,255,255,.85);border-radius:5px;padding:3px 6px">{{ sheetPh }}</span>
+    <button onClick="{{ closeSheet }}" style="position:absolute;top:12px;right:12px;border:0;background:rgba(255,255,255,.92);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;color:#171310;line-height:1">×</button>
+  </div>
+  <div style="flex:1;min-height:0;overflow-y:auto;padding:16px 18px 20px">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="font-size:19px;font-weight:800;color:#171310;line-height:1.2">{{ sheetName }}</span>
+      <span style="font-size:12.5px;color:#8A8078;font-weight:500;line-height:1.45">{{ sheetDesc }}</span>
+      <span style="font-size:18px;font-weight:800;color:#C5361D;margin-top:2px">{{ sheetBase }}</span>
+    </div>
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span style="font-size:14px;font-weight:800;color:#171310">{{ g.label }}</span>
+          <span style="font-size:10.5px;font-weight:700;color:{{ g.hintColor }};background:{{ g.hintBg }};border-radius:5px;padding:2px 6px">{{ g.hint }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <sc-for list="{{ g.opts }}" as="o" hint-placeholder-count="3">
+            <button onClick="{{ o.onPick }}" style="width:100%;border:1.5px solid {{ o.bc }};background:{{ o.bg }};cursor:pointer;font-family:inherit;border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;text-align:left">
+              <span style="width:18px;height:18px;flex:none;border-radius:{{ o.markRadius }};border:1.5px solid {{ o.mc }};background:{{ o.mbg }};color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;line-height:1">{{ o.mark }}</span>
+              <span style="flex:1;font-size:13.5px;font-weight:600;color:#171310">{{ o.n }}</span>
+              <span style="font-size:13px;font-weight:700;color:{{ o.pc }}">{{ o.pLabel }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:14px;font-weight:800;color:#171310">Note pour la cuisine</span>
+      <input value="{{ note }}" onChange="{{ onNote }}" placeholder="Sans coriandre, sauce à part…" style="width:100%;border:1.5px solid rgba(23,19,16,.12);background:#FBF8F4;border-radius:12px;padding:12px 13px;font-size:13px;font-weight:500;color:#171310;outline:none">
+    </div>
+  </div>
+  <div style="flex:none;border-top:1px solid rgba(23,19,16,.08);padding:12px 16px 20px;display:flex;align-items:center;gap:12px;background:#FFFFFF">
+    <div style="display:flex;align-items:center;gap:12px;border:1.5px solid rgba(23,19,16,.12);border-radius:999px;padding:6px 10px;flex:none">
+      <button onClick="{{ dec }}" style="border:0;background:transparent;color:#171310;font-size:17px;cursor:pointer;line-height:1;width:16px">−</button>
+      <span style="font-size:14px;font-weight:800;color:#171310;min-width:14px;text-align:center">{{ qty }}</span>
+      <button onClick="{{ inc }}" style="border:0;background:transparent;color:#C5361D;font-size:17px;cursor:pointer;line-height:1;width:16px">+</button>
+    </div>
+    <button onClick="{{ addToCart }}" style="flex:1;border:0;cursor:pointer;font-family:inherit;background:#C5361D;color:#fff;border-radius:14px;height:50px;font-size:14.5px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px">Ajouter · {{ sheetTotal }}</button>
+  </div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:940}}">
+const G = {
+  size: {id:'size',label:'Taille',type:'single',req:true,opts:[{n:'Normale',p:0},{n:'Grande (+30%)',p:2.5}]},
+  spice: {id:'spice',label:'Niveau de piment',type:'single',req:true,opts:[{n:'Doux',p:0},{n:'Moyen',p:0},{n:'Fort',p:0},{n:'Très fort',p:0}]},
+  base: {id:'base',label:'Accompagnement',type:'single',req:true,opts:[{n:'Riz blanc',p:0},{n:'Riz cantonais',p:1.5},{n:'Nouilles udon sautées',p:2},{n:'Salade de chou',p:1}]},
+  ramenX: {id:'x',label:'Suppléments',type:'multi',max:4,opts:[{n:'Œuf mollet mariné',p:1.5},{n:'Chashu de porc (2 tr.)',p:3},{n:'Double nouilles',p:2},{n:'Pousses de bambou',p:1},{n:'Maïs doux',p:1},{n:'Nori supplémentaire',p:.8}]},
+  wokX: {id:'x',label:'Suppléments',type:'multi',max:3,opts:[{n:'Bœuf émincé',p:3.5},{n:'Crevettes (5)',p:4},{n:'Tofu grillé',p:2},{n:'Légumes croquants',p:1.5}]},
+  sushiX: {id:'x',label:'Options',type:'multi',max:3,opts:[{n:'Wasabi frais',p:1},{n:'Gingembre en plus',p:.5},{n:'Sauce soja sucrée',p:.5}]},
+  drink: {id:'dr',label:'Boisson incluse',type:'single',req:true,opts:[{n:'Thé vert glacé',p:0},{n:'Coca 33cl',p:0},{n:'Ramune litchi',p:1},{n:'Bière Asahi 33cl',p:2}]},
+  dessert: {id:'de',label:'Ajouter un dessert',type:'single',opts:[{n:'Perles de coco (3)',p:3.5},{n:'Mochi glacé',p:3.9},{n:'Beignet de banane',p:3.2}]},
+  pieces: {id:'pc',label:'Format',type:'single',req:true,opts:[{n:'6 pièces',p:0},{n:'12 pièces',p:6.5},{n:'18 pièces',p:12}]}
+};
+
+const CATS = [
+  {id:'pop', name:'Les + commandés', badge:'TOP', dishes:[
+    {n:'Ramen tonkotsu maison', d:'Bouillon de porc 18 h, chashu, œuf mollet, nori', p:15.9, sold:'Vendu 820 fois ce mois', badge:'N°1', ph:'photo ramen', g:['size','ramenX','spice']},
+    {n:'Raviolis grillés au porc (6)', d:'Gyoza croustillants, sauce ponzu maison', p:7.5, sold:'Vendu 640 fois ce mois', ph:'photo gyoza', g:['pieces','sushiX']},
+    {n:'Bœuf sauté aux oignons', d:'Wok grand feu, sauce soja-gingembre', p:16.5, sold:'Vendu 510 fois ce mois', ph:'photo wok bœuf', g:['base','spice','wokX']},
+    {n:'Sushi mix 12 pièces', d:'Saumon, thon, crevette, avocat', p:18.9, sold:'Vendu 430 fois ce mois', badge:'CHEF', ph:'photo sushi mix', g:['sushiX']},
+    {n:'Poulet croustillant sauce aigre-douce', d:'Ananas, poivrons, sésame torréfié', p:14.5, sold:'Vendu 390 fois ce mois', ph:'photo poulet', g:['base','wokX']}
+  ]},
+  {id:'ent', name:'Entrées & Dim sum', dishes:[
+    {n:'Nems au porc (4)', d:'Salade, menthe, sauce nuoc-mâm', p:6.5, sold:'Vendu 310 fois', ph:'photo nems', g:['sushiX']},
+    {n:'Har gow crevettes (4)', d:'Pâte translucide vapeur', p:7.9, sold:'Vendu 270 fois', ph:'photo har gow', g:['pieces']},
+    {n:'Siu mai porc-crevette (4)', d:'Vapeur, œufs de tobiko', p:7.5, sold:'Vendu 240 fois', ph:'photo siu mai', g:['pieces']},
+    {n:'Edamame au sel de Guérande', d:'Fèves de soja vapeur', p:4.9, sold:'Vendu 460 fois', ph:'photo edamame', g:[]},
+    {n:'Salade de méduse au sésame', d:'Croquante, vinaigre noir, huile pimentée', p:8.5, sold:'Vendu 90 fois', ph:'photo salade', g:['spice']},
+    {n:'Bao au porc laqué (2)', d:'Pain vapeur, concombre, cacahuètes', p:8.9, sold:'Vendu 350 fois', badge:'NOUVEAU', ph:'photo bao', g:['spice']}
+  ]},
+  {id:'sus', name:'Sushis & Makis', dishes:[
+    {n:'Sashimi saumon (6)', d:'Tranché épais, découpe du jour', p:11.9, sold:'Vendu 280 fois', ph:'photo sashimi', g:['sushiX']},
+    {n:'California avocat-crevette (6)', d:'Sésame, mayonnaise japonaise', p:8.9, sold:'Vendu 320 fois', ph:'photo california', g:['pieces','sushiX']},
+    {n:'Maki thon épicé (6)', d:'Thon, sauce sriracha, ciboule', p:9.5, sold:'Vendu 210 fois', ph:'photo maki', g:['spice','sushiX']},
+    {n:'Chirashi saumon', d:'Riz vinaigré, saumon, avocat, tobiko', p:17.5, sold:'Vendu 160 fois', ph:'photo chirashi', g:['sushiX']},
+    {n:'Plateau 24 pièces', d:'Sushis, makis, california, sashimi', p:34.9, sold:'Vendu 120 fois', badge:'PARTAGE', ph:'photo plateau', g:['sushiX']}
+  ]},
+  {id:'ram', name:'Ramen & Soupes', dishes:[
+    {n:'Ramen shoyu poulet', d:'Bouillon clair, poulet grillé, ciboule', p:14.5, sold:'Vendu 300 fois', ph:'photo ramen shoyu', g:['size','ramenX','spice']},
+    {n:'Ramen épicé miso', d:'Miso rouge, huile de piment, porc haché', p:15.5, sold:'Vendu 260 fois', ph:'photo ramen miso', g:['size','ramenX','spice']},
+    {n:'Soupe won-ton', d:'Raviolis crevette, bouillon volaille', p:9.9, sold:'Vendu 190 fois', ph:'photo wonton', g:['size']},
+    {n:'Soupe aigre-piquante', d:'Tofu, champignons noirs, vinaigre noir', p:8.5, sold:'Vendu 175 fois', ph:'photo soupe', g:['size','spice']},
+    {n:'Udon aux légumes', d:'Nouilles épaisses, bouillon dashi', p:12.9, sold:'Vendu 140 fois', ph:'photo udon', g:['size','ramenX']}
+  ]},
+  {id:'wok', name:'Woks & Nouilles sautées', dishes:[
+    {n:'Nouilles sautées au poulet', d:'Wok, germes de soja, ciboule', p:13.5, sold:'Vendu 410 fois', ph:'photo nouilles', g:['spice','wokX']},
+    {n:'Yakisoba porc', d:'Sauce yakisoba, chou, gingembre rouge', p:14.5, sold:'Vendu 230 fois', ph:'photo yakisoba', g:['spice','wokX']},
+    {n:'Pad thaï crevettes', d:'Tamarin, cacahuètes, citron vert', p:15.9, sold:'Vendu 200 fois', ph:'photo pad thai', g:['spice','wokX']},
+    {n:'Bœuf sauce satay', d:'Cacahuète, lait de coco, piment', p:16.9, sold:'Vendu 150 fois', ph:'photo satay', g:['base','spice']},
+    {n:'Tofu mapo', d:'Sichuan, poivre timut, haricots fermentés', p:13.9, sold:'Vendu 130 fois', badge:'VÉGÉ', ph:'photo mapo', g:['base','spice']},
+    {n:'Canard laqué sauté', d:'Poireau, sauce hoisin', p:19.5, sold:'Vendu 110 fois', ph:'photo canard', g:['base','wokX']}
+  ]},
+  {id:'riz', name:'Riz & Donburi', dishes:[
+    {n:'Riz cantonais', d:'Jambon, petits pois, omelette', p:9.5, sold:'Vendu 520 fois', ph:'photo riz cantonais', g:['size','wokX']},
+    {n:'Gyudon bœuf', d:'Bœuf mijoté, oignon doux, œuf', p:14.9, sold:'Vendu 180 fois', ph:'photo gyudon', g:['size','spice']},
+    {n:'Katsudon porc pané', d:'Panure croustillante, sauce dashi', p:15.5, sold:'Vendu 170 fois', ph:'photo katsudon', g:['size']},
+    {n:'Riz sauté aux crevettes', d:'Crevettes décortiquées, ail, ciboule', p:13.9, sold:'Vendu 260 fois', ph:'photo riz crevette', g:['size','spice']},
+    {n:'Bibimbap végétarien', d:'Légumes marinés, gochujang, œuf', p:13.5, sold:'Vendu 95 fois', badge:'VÉGÉ', ph:'photo bibimbap', g:['spice']}
+  ]},
+  {id:'gri', name:'Grillades & Yakitori', dishes:[
+    {n:'Brochettes poulet-ciboule (3)', d:'Sauce tare, sésame', p:8.9, sold:'Vendu 290 fois', ph:'photo yakitori', g:['pieces','spice']},
+    {n:'Brochettes bœuf-fromage (2)', d:'Fondant, poivre noir', p:9.9, sold:'Vendu 210 fois', ph:'photo brochette bœuf', g:['pieces']},
+    {n:'Travers de porc laqués', d:'Miel, cinq-épices, coriandre', p:16.9, sold:'Vendu 140 fois', ph:'photo travers', g:['base']},
+    {n:'Aubergine grillée miso', d:'Miso sucré, sésame noir', p:8.5, sold:'Vendu 100 fois', badge:'VÉGÉ', ph:'photo aubergine', g:[]}
+  ]},
+  {id:'men', name:'Menus & Formules', badge:'-15%', dishes:[
+    {n:'Menu Midi Express', d:'Entrée au choix + plat wok + boisson', p:16.9, sold:'Vendu 480 fois', badge:'-15%', ph:'photo menu midi', g:['base','drink','dessert']},
+    {n:'Menu Ramen complet', d:'Gyoza (4) + ramen au choix + boisson', p:22.9, sold:'Vendu 260 fois', badge:'-15%', ph:'photo menu ramen', g:['size','drink','dessert']},
+    {n:'Formule Duo à partager', d:'2 entrées, 2 plats, 2 boissons, 2 desserts', p:44.9, sold:'Vendu 130 fois', badge:'DUO', ph:'photo formule duo', g:['drink','dessert']},
+    {n:'Grand plateau famille (4 pers.)', d:'Sushis, dim sum, wok, riz, desserts', p:79.9, sold:'Vendu 60 fois', ph:'photo plateau famille', g:['drink','dessert']}
+  ]},
+  {id:'des', name:'Desserts', dishes:[
+    {n:'Mochi glacé (3)', d:'Matcha, sésame noir, mangue', p:6.5, sold:'Vendu 240 fois', ph:'photo mochi', g:[]},
+    {n:'Perles de coco (3)', d:'Pâte de haricot rouge, coco râpée', p:5.5, sold:'Vendu 180 fois', ph:'photo perles', g:[]},
+    {n:'Beignets de banane', d:'Miel, sésame', p:5.9, sold:'Vendu 160 fois', ph:'photo beignets', g:[]},
+    {n:'Cheesecake yuzu', d:'Biscuit sésame, coulis de yuzu', p:6.9, sold:'Vendu 90 fois', badge:'NOUVEAU', ph:'photo cheesecake', g:[]}
+  ]},
+  {id:'boi', name:'Boissons', dishes:[
+    {n:'Thé vert glacé maison 50cl', d:'Sencha infusé à froid, sans sucre', p:3.9, sold:'Vendu 380 fois', ph:'photo thé', g:[]},
+    {n:'Ramune litchi', d:'Limonade japonaise pétillante', p:4.5, sold:'Vendu 220 fois', ph:'photo ramune', g:[]},
+    {n:'Bière Asahi 33cl', d:'Blonde japonaise', p:5.5, sold:'Vendu 190 fois', ph:'photo bière', g:[]},
+    {n:'Coca-Cola 33cl', d:'Canette fraîche', p:2.9, sold:'Vendu 340 fois', ph:'photo soda', g:[]},
+    {n:'Saké chaud 15cl', d:'Junmai, servi tiède', p:7.9, sold:'Vendu 70 fois', ph:'photo saké', g:[]}
+  ]}
+];
+
+let _uid = 0;
+CATS.forEach(c => c.dishes.forEach(d => { d.id = 'd' + (++_uid); d.cat = c.id; }));
+const ALL = CATS.flatMap(c => c.dishes);
+
+const eur = n => n.toFixed(2).replace('.', ',') + ' €';
+
+class Component extends DCLogic {
+  state = { view:'menu', mode:'deliv', q:'', active:'pop', cart:[], sheet:null, sel:{}, qty:1, note:'' };
+
+  scrollTo(id) {
+    const el = this.listEl && this.listEl.querySelector('#sec-' + id);
+    if (el) { this.lock = Date.now(); this.listEl.scrollTop = el.offsetTop; }
+  }
+
+  openSheet(d) {
+    const sel = {};
+    (d.g || []).forEach(k => { const g = G[k]; sel[g.id] = g.type === 'single' ? (g.req ? 0 : -1) : []; });
+    this.setState({ sheet:d, sel, qty:1, note:'' });
+  }
+
+  sheetUnit() {
+    const d = this.state.sheet; if (!d) return 0;
+    let p = d.p;
+    (d.g || []).forEach(k => {
+      const g = G[k], s = this.state.sel[g.id];
+      if (g.type === 'single') { if (s >= 0 && g.opts[s]) p += g.opts[s].p; }
+      else (s || []).forEach(i => p += g.opts[i].p);
+    });
+    return p;
+  }
+
+  optLabel() {
+    const d = this.state.sheet, out = [];
+    (d.g || []).forEach(k => {
+      const g = G[k], s = this.state.sel[g.id];
+      if (g.type === 'single') { if (s >= 0 && g.opts[s]) out.push(g.opts[s].n); }
+      else (s || []).forEach(i => out.push(g.opts[i].n));
+    });
+    if (this.state.note) out.push('« ' + this.state.note + ' »');
+    return out.join(' · ');
+  }
+
+  add() {
+    const d = this.state.sheet;
+    this.setState(st => ({
+      sheet:null,
+      cart:[...st.cart, { key:'l'+Date.now(), n:d.n, unit:this.sheetUnit(), qty:st.qty, opts:this.optLabel() }]
+    }));
+  }
+
+  quickAdd(d) { this.setState(st => ({ cart:[...st.cart, { key:'l'+Date.now(), n:d.n, unit:d.p, qty:1, opts:'' }] })); }
+
+  bump(key, n) {
+    this.setState(st => ({ cart: st.cart.map(l => l.key === key ? {...l, qty:l.qty+n} : l).filter(l => l.qty > 0) }));
+  }
+
+  renderVals() {
+    const st = this.state;
+    const sub = st.cart.reduce((a, l) => a + l.unit * l.qty, 0);
+    const discount = sub >= 40 ? 5 : 0;
+    const fee = st.mode === 'pickup' ? 0 : (sub >= 30 ? 0 : 3.5);
+    const total = Math.max(0, sub - discount + fee);
+    const count = st.cart.reduce((a, l) => a + l.qty, 0);
+
+    let tierText, tierPct;
+    if (st.mode === 'pickup' && sub < 40) { tierText = 'Plus que ' + eur(40 - sub) + ' pour 5 € de remise'; tierPct = Math.min(100, sub/40*100) + '%'; }
+    else if (sub < 30 && st.mode === 'deliv') { tierText = 'Plus que ' + eur(30 - sub) + ' pour la livraison offerte'; tierPct = Math.min(100, sub/30*100) + '%'; }
+    else if (sub < 40) { tierText = 'Livraison offerte. Plus que ' + eur(40 - sub) + ' pour 5 € de remise'; tierPct = sub/40*100 + '%'; }
+    else { tierText = 'Remise de 5 € débloquée. Palier maximal atteint'; tierPct = '100%'; }
+
+    const q = st.q.trim().toLowerCase();
+    const match = d => (d.n + ' ' + d.d).toLowerCase().includes(q);
+
+    const decorate = d => ({
+      ...d,
+      priceLabel: (d.g && d.g.length ? 'dès ' : '') + eur(d.p),
+      hasBadge: !!d.badge,
+      btnLabel: d.g && d.g.length ? 'Choisir' : '+',
+      btnBg: d.g && d.g.length ? '#FDEDE9' : '#C5361D',
+      btnFg: d.g && d.g.length ? '#C5361D' : '#FFFFFF',
+      onOpen: e => { e.stopPropagation(); (d.g && d.g.length) ? this.openSheet(d) : this.quickAdd(d); }
+    });
+
+    const sections = q
+      ? [{ domId:'sec-res', name:'Résultats', count:ALL.filter(match).length + ' plats', dishes:ALL.filter(match).map(decorate) }]
+      : CATS.map(c => ({ domId:'sec-'+c.id, name:c.name, count:c.dishes.length + ' plats', dishes:c.dishes.map(decorate) }));
+
+    const cats = CATS.map(c => {
+      const on = c.id === st.active && !q;
+      return { name:c.name, badge:c.badge || '', hasBadge:!!c.badge, bg:on?'#FBF8F4':'transparent', fg:on?'#171310':'#6E655D',
+        fw:on?'800':'600', bar:on?'#C5361D':'transparent', onPick:() => { this.setState({ active:c.id, q:'' }); requestAnimationFrame(() => this.scrollTo(c.id)); } };
+    });
+
+    const sheet = st.sheet;
+    const groups = sheet ? (sheet.g || []).map(k => {
+      const g = G[k], s = st.sel[g.id];
+      const req = g.type === 'single' && g.req;
+      return {
+        label:g.label,
+        hint: req ? 'Obligatoire' : (g.type === 'multi' ? 'Jusqu\u2019à ' + g.max : 'Facultatif'),
+        hintColor: req ? '#C5361D' : '#8A8078',
+        hintBg: req ? '#FDEDE9' : '#F3EFE8',
+        opts: g.opts.map((o, i) => {
+          const on = g.type === 'single' ? s === i : (s || []).includes(i);
+          return { n:o.n, pLabel:o.p ? '+ ' + eur(o.p) : 'Inclus', pc:o.p ? '#C5361D' : '#A79D93',
+            bc:on?'#C5361D':'rgba(23,19,16,.10)', bg:on?'#FDEDE9':'#FFFFFF',
+            mc:on?'#C5361D':'rgba(23,19,16,.22)', mbg:on?'#C5361D':'transparent', mark:on?'✓':'',
+            markRadius:g.type==='single'?'50%':'6px',
+            onPick:() => this.setState(p => {
+              const sel = {...p.sel};
+              if (g.type === 'single') sel[g.id] = on && !g.req ? -1 : i;
+              else { const cur = (sel[g.id]||[]); sel[g.id] = on ? cur.filter(x=>x!==i) : (cur.length >= g.max ? cur : [...cur, i]); }
+              return { sel };
+            }) };
+        })
+      };
+    }) : [];
+
+    const upsells = ALL.filter(d => ['Mochi glacé (3)','Thé vert glacé maison 50cl','Edamame au sel de Guérande','Nems au porc (4)','Ramune litchi','Perles de coco (3)'].includes(d.n))
+      .map(d => ({ n:d.n, priceLabel:eur(d.p), onAdd:() => this.quickAdd(d) }));
+
+    return {
+      isMenu: st.view === 'menu', isCart: st.view === 'cart', isDone: st.view === 'done',
+      q: st.q, hasQ: !!st.q, noResults: !!q && !ALL.some(match),
+      onQ: e => this.setState({ q:e.target.value }), clearQ: () => this.setState({ q:'' }),
+      setDelivery: () => this.setState({ mode:'deliv' }), setPickup: () => this.setState({ mode:'pickup' }),
+      delivBg: st.mode==='deliv'?'#171310':'transparent', delivFg: st.mode==='deliv'?'#FFFFFF':'#6E655D',
+      pickBg: st.mode==='pickup'?'#171310':'transparent', pickFg: st.mode==='pickup'?'#FFFFFF':'#6E655D',
+      modeLabel: st.mode==='deliv'?'Livraison · 25-35 min':'À emporter · prêt en 15 min',
+      tierText, tierPct, cats, sections,
+      listRef: el => { if (el) this.listEl = el; },
+      onScroll: e => {
+        if (this.lock && Date.now() - this.lock < 400) return;
+        const top = e.target.scrollTop + 8;
+        let cur = CATS[0].id;
+        CATS.forEach(c => { const el = e.target.querySelector('#sec-' + c.id); if (el && el.offsetTop <= top) cur = c.id; });
+        if (cur !== this.state.active) this.setState({ active:cur });
+      },
+      lines: st.cart.map(l => ({ n:l.n, opts:l.opts, hasOpts:!!l.opts, qty:l.qty, priceLabel:eur(l.unit*l.qty),
+        onPlus:() => this.bump(l.key, 1), onMinus:() => this.bump(l.key, -1) })),
+      cartEmpty: st.cart.length === 0,
+      upsells,
+      subtotalLabel: eur(sub), discountLabel: '− ' + eur(discount), hasDiscount: discount > 0,
+      feeLabel: fee === 0 ? 'Offerts' : eur(fee), totalLabel: eur(total), count,
+      showBar: (st.view === 'menu' && count > 0) || (st.view === 'cart' && count > 0),
+      barSub: st.view === 'cart' ? (st.mode==='deliv'?'Livraison incluse dans le total':'Retrait sur place') : count + (count>1?' articles':' article'),
+      barCta: st.view === 'cart' ? 'Commander' : 'Voir le panier',
+      barAction: () => this.setState({ view: st.view === 'cart' ? 'done' : 'cart' }),
+      goMenu: () => this.setState({ view:'menu' }),
+      reset: () => this.setState({ view:'menu', cart:[], q:'', active:'pop' }),
+      sheetOpen: !!sheet, sheetName: sheet ? sheet.n : '', sheetDesc: sheet ? sheet.d : '',
+      sheetPh: sheet ? sheet.ph : '', sheetBase: sheet ? eur(sheet.p) : '',
+      sheetTotal: sheet ? eur(this.sheetUnit() * st.qty) : '', groups,
+      qty: st.qty, note: st.note, onNote: e => this.setState({ note:e.target.value }),
+      inc: () => this.setState(p => ({ qty:p.qty+1 })), dec: () => this.setState(p => ({ qty:Math.max(1,p.qty-1) })),
+      closeSheet: () => this.setState({ sheet:null }), addToCart: () => this.add()
+    };
+  }
+}
+</script>
+</body>
+</html>
